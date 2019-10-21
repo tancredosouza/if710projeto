@@ -1,5 +1,4 @@
 # Appersonal Trainer
-Não precisa dizer qual o próximo exercício. A gente já sabe. 
 
 ### IF710 - Programação para Dispositivos Móveis com Android
 Especificação Inicial do Projeto
@@ -21,15 +20,16 @@ Existem muitos apps de fitness tracking no mercado hoje em dia.
 Porém, não foi encontrado algum que possua a feature proposta nesse projeto. 
 
 Alguns exemplos de aplicações de fitness tracking.
-
-Zones
-
-Workout (iOS)
-
-colocar mais apps de android aqui
+- Zones
+- Workout (iOS)
+- Runtastic.
+- Google Fit.
+- Nike Training Club.
+- Strava.
+- Runkeeper.
 
 ## Estrutura da aplicação
-Adicionar telas do Proto.io
+![alt text]() "Fluxo de navegação")
 
 ## Desenvolvimento
 O projeto será realizado em dupla, tendo seu esforço de trabalho dividdo igualmente entre os integrantes. 
