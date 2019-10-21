@@ -29,7 +29,7 @@ Alguns exemplos de aplicações de fitness tracking.
 - Runkeeper.
 
 ## Estrutura da aplicação
-![alt text](https://github.com/tancredosouza/if710projeto/blob/master/especificacao/imgs/mockupFluxoTelas.gif, "Fluxo de navegação")
+![alt text](https://github.com/tancredosouza/if710projeto/blob/master/especificacao/imgs/mockupFluxoTelas.gif)
 
 ## Desenvolvimento
 O projeto será realizado em dupla, tendo seu esforço de trabalho dividdo igualmente entre os integrantes. 
