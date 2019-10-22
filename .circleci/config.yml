@@ -7,7 +7,7 @@
        - checkout
        - run: 
            name: "Enforce ktlint code formatting"
-           command: "! ./gradlew ktlintFormat
+           command: "! ./gradlew ktlintFormat"
        - run: sleep 25
    two:
      docker:
