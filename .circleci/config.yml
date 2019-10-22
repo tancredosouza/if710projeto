@@ -5,10 +5,8 @@
        - image: circleci/ruby:2.4.1
      steps:
        - checkout
-       - run: 
-           name: "Enforce ktlint code formatting"
-           command: "! ./gradlew ktlintFormat"
-       - run: sleep 25
+       - run: echo "Hi"
+       - run: sleep 15
    two:
      docker:
        - image: circleci/ruby:2.4.1
