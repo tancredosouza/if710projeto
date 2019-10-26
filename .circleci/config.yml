@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/if710projeto/Appersonal
+    working_directory: ~/Appersonal
     docker:
       - image: circleci/android:api-25-alpha
     environment:
@@ -12,11 +12,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          command: cd Appersonal;./gradlew androidDependencies
       - run:
           name: Run Tests
           command: ./gradlew lint test
