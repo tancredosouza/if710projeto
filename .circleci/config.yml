@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Run Tests
           command: cd Appersonal; ./gradlew lint test
+      - run:
+          name: Check code formatting
+          command: cd Appersonal;./gradlew klintCheck
       - store_artifacts:
           path: app/build/reports
           destination: reports
