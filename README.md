@@ -1,4 +1,5 @@
 # Appersonal Trainer
+[![CircleCI](https://circleci.com/gh/tancredosouza/if710projeto/tree/master.svg?style=svg)](https://circleci.com/gh/tancredosouza/if710projeto/tree/master)
 
 ### IF710 - Programação para Dispositivos Móveis com Android
 Especificação Inicial do Projeto
