@@ -9,13 +9,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "Appersonal/build.gradle" }}-{{ checksum  "Appersonal/app/build.gradle" }}
       - run:
           name: Download Dependencies
           command: cd Appersonal;./gradlew androidDependencies
       - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: cd Appersonal; ./gradlew lint test
       - store_artifacts:
           path: app/build/reports
           destination: reports
