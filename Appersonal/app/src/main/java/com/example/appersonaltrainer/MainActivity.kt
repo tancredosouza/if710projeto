@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
+    var isPaused: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "olar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            isPaused = true
         }
+
+        val exerciseTimer = ExerciseTimer(timerField, 20000)
+
+        exerciseTimer.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
