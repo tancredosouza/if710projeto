@@ -3,19 +3,23 @@ package com.example.appersonaltrainer
 import android.os.CountDownTimer
 import android.widget.TextView
 
-class ExerciseTimer(textView: TextView, exerciseDuration: Long) {
-    private var timer: CountDownTimer? = null
+class ExerciseTimer(view: TextView, exerciseTotalTime: Long) {
+    private val timer: CountDownTimer
+    private val textView: TextView
+    private val exerciseCurrentTime: Long
 
     init {
-        timer = initTimer(textView, exerciseDuration)
+        textView = view
+        exerciseCurrentTime = exerciseTotalTime
+        timer = initTimer()
     }
 
     fun start() {
-        timer!!.start()
+        timer.start()
     }
 
-    private fun initTimer(textView: TextView, exerciseDuration: Long): CountDownTimer {
-        return object : CountDownTimer(exerciseDuration, 1000) {
+    private fun initTimer(): CountDownTimer {
+        return object : CountDownTimer(exerciseCurrentTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 textView.text = "seconds remaining: " + millisUntilFinished / 1000
             }
