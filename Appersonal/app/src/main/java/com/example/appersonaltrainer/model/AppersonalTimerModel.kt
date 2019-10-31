@@ -1,44 +1,20 @@
-package com.example.appersonaltrainer
+package com.example.appersonaltrainer.model
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import java.util.*
+import com.example.appersonaltrainer.components.ExerciseTimer
 
-
-class AppersonalTimerModel(private var initialTimeInSeconds: Long) {
-    private val TIMER: Timer
-
-    private val TIMER_TASK: TimerTask
-
-    private val elapsedTimeInSeconds: MutableLiveData<Long>
-
-    fun getElapsedTimeInSeconds(): LiveData<Long> {
-        return elapsedTimeInSeconds
-    }
+class AppersonalTimerModel(initialTimeInSeconds: Long) {
+    private val EXERCISE_TIMER: ExerciseTimer
 
     init {
-        TIMER = Timer()
-        TIMER_TASK = createTimerTask()
-        elapsedTimeInSeconds = MutableLiveData()
-
-        updateTheElapsedTimeEverySecond()
+        EXERCISE_TIMER = ExerciseTimer(initialTimeInSeconds)
     }
 
-    private fun createTimerTask(): TimerTask {
-        return object : TimerTask() {
-            override fun run() {
-                elapsedTimeInSeconds.postValue(initialTimeInSeconds)
-
-                initialTimeInSeconds -= 1
-            }
-        }
+    fun startCounting() {
+        EXERCISE_TIMER.startCounting()
     }
 
-    private fun updateTheElapsedTimeEverySecond(): Unit {
-        TIMER.scheduleAtFixedRate(TIMER_TASK, ONE_SECOND_IN_MILLISECONDS, ONE_SECOND_IN_MILLISECONDS)
-    }
-
-    companion object {
-        const val ONE_SECOND_IN_MILLISECONDS: Long = 1000
+    fun getElapsedTimeInSeconds(): LiveData<Long> {
+        return EXERCISE_TIMER.getElapsedTimeInSeconds()
     }
 }

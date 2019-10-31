@@ -1,7 +1,10 @@
 package com.example.appersonaltrainer
 
-import junit.framework.Assert.assertEquals
+import com.example.appersonaltrainer.contract.AppersonalContract
+import com.example.appersonaltrainer.model.AppersonalTimerModel
+import com.example.appersonaltrainer.presenter.AppersonalPresenter
 import org.junit.Test
+import org.mockito.Mockito
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -10,7 +13,13 @@ import org.junit.Test
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun whenUserClicksActionButton_shouldStartCountingTime() {
+        val fakeCountdownTimer: AppersonalTimerModel = Mockito.mock(
+            AppersonalTimerModel::class.java)
+
+        val fakeView: AppersonalContract.View = Mockito.mock(AppersonalContract.View::class.java)
+        Mockito.doNothing().`when`(fakeView).updateDisplayedTime(Mockito.anyString())
+
+        val presenter = AppersonalPresenter(fakeView)
     }
 }

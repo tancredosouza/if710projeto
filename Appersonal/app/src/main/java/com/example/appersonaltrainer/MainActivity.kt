@@ -1,41 +1,48 @@
 package com.example.appersonaltrainer
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import com.example.appersonaltrainer.contract.AppersonalContract
+import com.example.appersonaltrainer.presenter.AppersonalPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
-    var isPaused: Boolean = false
+class MainActivity : AppCompatActivity(), AppersonalContract.View {
+    private var presenter: AppersonalContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fab.setOnClickListener { view ->
-            isPaused = true
-        }
-
-        val exerciseTimer = ExerciseTimer(timerField, 20000)
-
-        exerciseTimer.start()
+        setupPresenter()
+        setupButton()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    private fun setupPresenter() {
+        presenter = AppersonalPresenter(this)
+
+        presenter!!.setup()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+    private fun setupButton() {
+        action_button.apply {
+            setOnClickListener {
+                setImageResource(android.R.drawable.ic_media_pause)
+                presenter!!.handleButtonPress()
+            }
         }
+    }
+
+    override fun updateDisplayedTime(currentTimeInSeconds: String) {
+        timerField.text = currentTimeInSeconds
+    }
+
+    override fun getContext(): LifecycleOwner {
+        return this
+    }
+
+    override fun getUserInput(): Long {
+        return timerField.text.toString().toLong()
     }
 }
