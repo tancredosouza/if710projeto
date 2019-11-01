@@ -11,15 +11,16 @@ class AppersonalPresenter(private val viewToPresent: AppersonalContract.View) :
     init {
         timerModel =
             AppersonalTimerModel(viewToPresent.getUserInput())
+
+        observeDisplayedTimeChanges()
     }
 
-    override fun setup() {
-        val elapsedTimeObserver = Observer<Long> { aLong ->
-            val newText = aLong.toString()
-            viewToPresent.updateDisplayedTime(newText)
+    override fun observeDisplayedTimeChanges() {
+        val elapsedTimeObserver = Observer<Long> { newDisplayedTime ->
+            viewToPresent.updateDisplayedTime(newDisplayedTime)
         }
 
-        timerModel.getElapsedTimeInSeconds()
+        timerModel.getLiveDataFromTimer()
             .observe(viewToPresent.getContext(), elapsedTimeObserver)
     }
 

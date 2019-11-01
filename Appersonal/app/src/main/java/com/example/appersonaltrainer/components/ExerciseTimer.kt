@@ -1,49 +1,51 @@
 package com.example.appersonaltrainer.components
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 
-class ExerciseTimer(private var initialTimeInSeconds: Long) {
-    private val TIMER: Timer
+class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) {
+    private var TIMER_TASK: TimerTask? = null
 
-    private val TIMER_TASK: TimerTask
+    private val timerLiveData: MutableLiveData<Long>
 
-    private val elapsedTimeInSeconds: MutableLiveData<Long>
-
-    fun getElapsedTimeInSeconds(): LiveData<Long> {
-        return elapsedTimeInSeconds
+    fun getTimerLiveData(): MutableLiveData<Long> {
+        return timerLiveData
     }
 
     fun startCounting() {
-        updateTheElapsedTimeEverySecond()
+        TIMER_TASK = createTimerTask()
+        setupShouldUpdateTimeEverySecond()
     }
 
     init {
-        TIMER = Timer()
-        TIMER_TASK = createTimerTask()
-        elapsedTimeInSeconds = MutableLiveData()
+        timerLiveData = MutableLiveData()
     }
 
     private fun createTimerTask(): TimerTask {
         return object : TimerTask() {
             override fun run() {
-                elapsedTimeInSeconds.postValue(initialTimeInSeconds)
+                Log.v("Appersonal", "Update displayed time to $initialTimeInSeconds")
+                timerLiveData.postValue(initialTimeInSeconds)
 
                 initialTimeInSeconds -= 1
             }
         }
     }
 
-    private fun updateTheElapsedTimeEverySecond() {
-        TIMER.scheduleAtFixedRate(TIMER_TASK,
-            ONE_SECOND_IN_MILLISECONDS,
-            ONE_SECOND_IN_MILLISECONDS
+    private fun setupShouldUpdateTimeEverySecond() {
+        val timer = Timer()
+        val oneSecondInMilliseconds: Long = 1000
+
+        timer.scheduleAtFixedRate(
+            TIMER_TASK,
+            oneSecondInMilliseconds,
+            oneSecondInMilliseconds
         )
     }
 
     companion object {
-        const val ONE_SECOND_IN_MILLISECONDS: Long = 1000
+        fun withInitialTime(timeInSeconds: Long) =
+            ExerciseTimer(timeInSeconds)
     }
 }

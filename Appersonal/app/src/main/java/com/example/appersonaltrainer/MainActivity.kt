@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity(), AppersonalContract.View {
 
     private fun setupPresenter() {
         presenter = AppersonalPresenter(this)
-
-        presenter!!.setup()
     }
 
     private fun setupButton() {
@@ -34,8 +32,8 @@ class MainActivity : AppCompatActivity(), AppersonalContract.View {
         }
     }
 
-    override fun updateDisplayedTime(currentTimeInSeconds: String) {
-        timerField.text = currentTimeInSeconds
+    override fun updateDisplayedTime(currentTimeInSeconds: Long) {
+        timerField.text = currentTimeInSeconds.toString()
     }
 
     override fun getContext(): LifecycleOwner {

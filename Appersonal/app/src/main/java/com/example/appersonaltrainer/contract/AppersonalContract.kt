@@ -3,8 +3,8 @@ package com.example.appersonaltrainer.contract
 import androidx.lifecycle.LifecycleOwner
 
 interface AppersonalContract {
-    interface View {
-        fun updateDisplayedTime(currentTimeInSeconds: String)
+    interface View: LifecycleOwner {
+        fun updateDisplayedTime(currentTimeInSeconds: Long)
 
         fun getContext(): LifecycleOwner
 
@@ -12,7 +12,7 @@ interface AppersonalContract {
     }
 
     interface Presenter {
-        fun setup()
+        fun observeDisplayedTimeChanges()
 
         fun handleButtonPress()
     }
