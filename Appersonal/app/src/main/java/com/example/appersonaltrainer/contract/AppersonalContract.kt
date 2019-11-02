@@ -10,10 +10,4 @@ interface AppersonalContract {
 
         fun getUserInput(): Long
     }
-
-    interface Presenter {
-        fun observeDisplayedTimeChanges()
-
-        fun handleButtonPress()
-    }
 }

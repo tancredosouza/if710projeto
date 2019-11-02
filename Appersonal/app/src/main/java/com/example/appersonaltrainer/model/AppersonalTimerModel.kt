@@ -1,10 +1,12 @@
 package com.example.appersonaltrainer.model
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.appersonaltrainer.components.ExerciseTimer
 
 class AppersonalTimerModel(initialTimeInSeconds: Long) {
     private val EXERCISE_TIMER: ExerciseTimer
+
+    var isCounting: Boolean = false
 
     init {
         EXERCISE_TIMER = ExerciseTimer.withInitialTime(initialTimeInSeconds)
@@ -12,9 +14,15 @@ class AppersonalTimerModel(initialTimeInSeconds: Long) {
 
     fun startCounting() {
         EXERCISE_TIMER.startCounting()
+        isCounting = true
     }
 
-    fun getLiveDataFromTimer(): LiveData<Long> {
+    fun stopCounting() {
+        EXERCISE_TIMER.stopCounting()
+        isCounting = false
+    }
+
+    fun getLiveDataFromTimer(): MutableLiveData<Long> {
         return EXERCISE_TIMER.getTimerLiveData()
     }
 }

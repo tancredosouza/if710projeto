@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import java.util.*
 
 class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) {
-    private var TIMER_TASK: TimerTask? = null
+    private lateinit var TIMER_TASK: TimerTask
 
     private val timerLiveData: MutableLiveData<Long>
 
@@ -16,6 +16,10 @@ class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) 
     fun startCounting() {
         TIMER_TASK = createTimerTask()
         setupShouldUpdateTimeEverySecond()
+    }
+
+    fun stopCounting() {
+        assert(TIMER_TASK.cancel())
     }
 
     init {
