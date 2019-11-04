@@ -2,7 +2,8 @@ package com.example.appersonaltrainer.components
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 
 class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) {
     private lateinit var TIMER_TASK: TimerTask

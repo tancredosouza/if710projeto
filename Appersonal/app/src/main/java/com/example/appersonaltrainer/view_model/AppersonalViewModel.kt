@@ -11,12 +11,21 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View) : 
     private lateinit var elapsedTimeObserver: Observer<Long>
 
     fun handleButtonPress() {
-        timerModel.startCounting()
+        if (!timerModel.isCounting) {
+            observeDisplayedTimeChanges()
+            viewToPresent.buttonDisplaysThatCountingStarted()
+            timerModel.startCounting()
+        } else {
+            shutdown()
+        }
     }
 
     fun shutdown() {
-        if (timerModel.isCounting)
+        if (timerModel.isCounting) {
             timerModel.stopCounting()
+        }
+
+        viewToPresent.buttonDisplaysThatCountingStopped()
 
         timerModel.getLiveDataFromTimer()
             .removeObserver(elapsedTimeObserver)

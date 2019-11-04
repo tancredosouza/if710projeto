@@ -26,17 +26,23 @@ class MainActivity : AppCompatActivity(), AppersonalContract.View {
     private fun setupButtonClickListener() {
         action_button.apply {
             setOnClickListener {
-                setImageResource(android.R.drawable.ic_media_pause)
                 viewModel.handleButtonPress()
             }
         }
+    }
+
+    override fun buttonDisplaysThatCountingStarted() {
+        action_button.setImageResource(android.R.drawable.ic_media_pause)
+    }
+
+    override fun buttonDisplaysThatCountingStopped() {
+        action_button.setImageResource(android.R.drawable.ic_media_play)
     }
 
     override fun onDestroy() {
         viewModel.shutdown()
         super.onDestroy()
     }
-
 
     override fun updateDisplayedTime(currentTimeInSeconds: Long) {
         timerField.text = currentTimeInSeconds.toString()
