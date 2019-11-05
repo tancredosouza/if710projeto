@@ -15,16 +15,16 @@ class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) 
     }
 
     fun startCounting() {
-        TIMER_TASK = createTimerTask()
         setupShouldUpdateTimeEverySecond()
     }
 
     fun stopCounting() {
-        assert(TIMER_TASK.cancel())
+        TIMER_TASK.cancel()
     }
 
     init {
         timerLiveData = MutableLiveData()
+        TIMER_TASK = createTimerTask()
     }
 
     private fun createTimerTask(): TimerTask {
