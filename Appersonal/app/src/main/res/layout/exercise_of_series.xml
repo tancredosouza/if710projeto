@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical" >
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="101dp"
+    android:orientation="horizontal">
+
+    <TextView
+      android:id="@+id/name_of_exercise"
+      android:layout_width="205dp"
+      android:layout_height="39dp"
+      android:layout_weight="8"
+      android:text="Exercise Name"
+      android:textSize="18sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@+id/item_action"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.258" />
+
+    <TextView
+      android:id="@+id/time_of_exercise"
+      android:layout_width="220dp"
+      android:layout_height="34dp"
+      android:layout_weight="8"
+      android:text="X"
+      android:textSize="18sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.071"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/name_of_exercise" />
+
+    <Button
+      android:id="@+id/item_action"
+      android:layout_width="39dp"
+      android:layout_height="46dp"
+      android:layout_weight="2"
+      android:text="X"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.163" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -2,4 +2,9 @@
     <string name="app_name">Appersonal Trainer</string>
     <string name="action_settings">Settings</string>
   <string name="totalExerciseTime">20</string>
+  <string name="minhas_atividades">Minhas Atividades</string>
+  <string name="timer_activity_name">timer_activity</string>
+  <string name="homepage_activity_name">homepage_activity</string>
+  <string name="create_series_title">Criar Série</string>
+  <string name="create_series_activity_name">craete_series_activit</string>
 </resources>

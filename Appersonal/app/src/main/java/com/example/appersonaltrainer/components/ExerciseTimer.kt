@@ -6,12 +6,11 @@ import java.util.Timer
 import java.util.TimerTask
 
 class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) {
-    private lateinit var TIMER_TASK: TimerTask
-
-    private val timerLiveData: MutableLiveData<Long>
+    private val TIMER_TASK: TimerTask
+    private val TIMER_LIVE_DATA: MutableLiveData<Long>
 
     fun getTimerLiveData(): MutableLiveData<Long> {
-        return timerLiveData
+        return TIMER_LIVE_DATA
     }
 
     fun startCounting() {
@@ -23,7 +22,7 @@ class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) 
     }
 
     init {
-        timerLiveData = MutableLiveData()
+        TIMER_LIVE_DATA = MutableLiveData()
         TIMER_TASK = createTimerTask()
     }
 
@@ -31,7 +30,7 @@ class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) 
         return object : TimerTask() {
             override fun run() {
                 Log.v("Appersonal", "Update displayed time to $initialTimeInSeconds")
-                timerLiveData.postValue(initialTimeInSeconds)
+                TIMER_LIVE_DATA.postValue(initialTimeInSeconds)
 
                 initialTimeInSeconds -= 1
             }

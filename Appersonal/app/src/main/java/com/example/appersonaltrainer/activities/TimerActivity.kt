@@ -1,19 +1,20 @@
-package com.example.appersonaltrainer
+package com.example.appersonaltrainer.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.view_model.AppersonalViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.timer_activity.action_button
+import kotlinx.android.synthetic.main.timer_activity.timerField
 
-class MainActivity : AppCompatActivity(), AppersonalContract.View {
+class TimerActivity : AppCompatActivity(), AppersonalContract.View {
     private lateinit var viewModel: AppersonalViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.timer_activity)
 
         setupViewModel()
         setupButtonClickListener()
