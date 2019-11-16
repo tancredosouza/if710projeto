@@ -19,7 +19,7 @@ class ExerciseAdapter(private val activity: CreateSeriesActivity) :
     }
 
     private fun setupInflaterForViewGroup(viewGroup: ViewGroup): View {
-        return LayoutInflater.from(activity).inflate(R.layout.exercise_of_series, viewGroup, false)
+        return LayoutInflater.from(activity.applicationContext).inflate(R.layout.exercise_of_series, viewGroup, false)
     }
 
     override fun onBindViewHolder(exerciseViewHolder: ExerciseViewHolder, idx: Int) {

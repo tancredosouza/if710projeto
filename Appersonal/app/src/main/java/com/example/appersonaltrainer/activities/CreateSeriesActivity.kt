@@ -71,12 +71,14 @@ class CreateSeriesActivity : AppCompatActivity() {
     private fun setupSaveSeriesButton() {
         save_new_series_button.setOnClickListener {
             doAsync {
-                val db = SeriesDB.getDatabase(applicationContext)
+                val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
                 db.getAccessObject().insertSeries(seriesBeingCreated)
             }
             val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
-            Toast.makeText(applicationContext, "Atividade salva com sucesso!", Toast.LENGTH_LONG).show()
+
+            Toast.makeText(this@CreateSeriesActivity, "Atividade salva com sucesso!", Toast.LENGTH_LONG).show()
             startActivity(changeToHomepageActivity)
+            finish()
         }
     }
 
@@ -104,7 +106,7 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun loadActivityList() {
         doAsync {
-            val db = SeriesDB.getDatabase(applicationContext)
+            val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
             val m = db.getAccessObject().getAllCreatedSeries()
 
             Log.v("Appersonal", "Tamanho da lista = ${m.size}")

@@ -38,7 +38,7 @@ class HomepageActivity : AppCompatActivity() {
     }
 
     fun loadSeriesOfUser() {
-        val db = SeriesDB.getDatabase(this)
+        val db = SeriesDB.getDatabase(applicationContext)
 
         doAsync {
             val items = db.getAccessObject().getAllCreatedSeries()
@@ -47,6 +47,16 @@ class HomepageActivity : AppCompatActivity() {
                 updateSeriesList(items.toList())
             }
         }
+    }
+
+    fun deleteSeries(series: Series) {
+        val db = SeriesDB.getDatabase(this)
+
+        doAsync {
+            db.getAccessObject().removeSeries(series)
+        }
+
+        loadSeriesOfUser()
     }
 
     fun updateSeriesList(seriesList: List<Series>) {

@@ -5,7 +5,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
-import com.example.appersonaltrainer.activities.CreateSeriesActivity
 import com.example.appersonaltrainer.activities.HomepageActivity
 import com.example.appersonaltrainer.components.Series
 
@@ -22,7 +21,7 @@ class SeriesViewHolder(seriesView: View) : RecyclerView.ViewHolder(seriesView) {
         bindTextInformationForSeries(series)
 
         seriesDeleteAction.setOnClickListener {
-            //shouldDeleteExerciseFromSeries(series, activity)
+            shouldDeleteSeries(series, activity)
         }
     }
 
@@ -30,7 +29,7 @@ class SeriesViewHolder(seriesView: View) : RecyclerView.ViewHolder(seriesView) {
         nameOfSeriesHolder.text = series.name
     }
 
-    private fun shouldDeleteExerciseFromSeries(series: Series, activity: CreateSeriesActivity) {
-        //activity.deleteExerciseFromSeries(exercise)
+    private fun shouldDeleteSeries(series: Series, activity: HomepageActivity) {
+        activity.deleteSeries(series)
     }
 }
