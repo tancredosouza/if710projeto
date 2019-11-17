@@ -3,23 +3,21 @@ package com.example.appersonaltrainer.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appersonaltrainer.R
-import com.example.appersonaltrainer.adapters.SeriesAdapter
-import com.example.appersonaltrainer.components.Series
-import com.example.appersonaltrainer.databases.SeriesDB
+import com.example.appersonaltrainer.view_model.HomepageViewModel
 import kotlinx.android.synthetic.main.homepage_activity.create_series_button
-import kotlinx.android.synthetic.main.homepage_activity.series_list
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class HomepageActivity : AppCompatActivity() {
+    lateinit var homepageViewModel: HomepageViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.homepage_activity)
 
+        homepageViewModel = HomepageViewModel(applicationContext, this)
+
         setupButtons()
-        loadSeriesOfUser()
     }
 
     private fun setupButtons() {
@@ -29,6 +27,7 @@ class HomepageActivity : AppCompatActivity() {
     private fun setupButtonToCreateSeries() {
         create_series_button.setOnClickListener {
             changeToCreateSeriesActivity()
+            //finish()
         }
     }
 
@@ -37,39 +36,9 @@ class HomepageActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun loadSeriesOfUser() {
-        val db = SeriesDB.getDatabase(applicationContext)
-
-        doAsync {
-            val items = db.getAccessObject().getAllCreatedSeries()
-
-            uiThread {
-                updateSeriesList(items.toList())
-            }
-        }
-    }
-
-    fun deleteSeries(series: Series) {
-        val db = SeriesDB.getDatabase(this)
-
-        doAsync {
-            db.getAccessObject().removeSeries(series)
-        }
-
-        loadSeriesOfUser()
-    }
-
-    fun updateSeriesList(seriesList: List<Series>) {
-        series_list.apply {
-            layoutManager = LinearLayoutManager(this@HomepageActivity)
-            adapter = SeriesAdapter(seriesList, this@HomepageActivity)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 
-        loadSeriesOfUser()
+        homepageViewModel.loadSeriesOfUser()
     }
-
 }

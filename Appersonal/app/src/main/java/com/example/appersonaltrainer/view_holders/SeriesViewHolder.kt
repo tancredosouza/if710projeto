@@ -5,10 +5,12 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
-import com.example.appersonaltrainer.activities.HomepageActivity
 import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.view_model.HomepageViewModel
 
-class SeriesViewHolder(seriesView: View) : RecyclerView.ViewHolder(seriesView) {
+class SeriesViewHolder(seriesView: View, private val homepageViewModel: HomepageViewModel) :
+    RecyclerView.ViewHolder(seriesView) {
+
     private val nameOfSeriesHolder: TextView
     private val seriesDeleteAction: Button
 
@@ -17,19 +19,15 @@ class SeriesViewHolder(seriesView: View) : RecyclerView.ViewHolder(seriesView) {
         seriesDeleteAction = itemView.findViewById(R.id.delete_action)
     }
 
-    fun bind(series : Series, activity: HomepageActivity) {
+    fun bind(series: Series) {
         bindTextInformationForSeries(series)
 
         seriesDeleteAction.setOnClickListener {
-            shouldDeleteSeries(series, activity)
+            homepageViewModel.deleteSeries(series)
         }
     }
 
     private fun bindTextInformationForSeries(series: Series) {
         nameOfSeriesHolder.text = series.name
-    }
-
-    private fun shouldDeleteSeries(series: Series, activity: HomepageActivity) {
-        activity.deleteSeries(series)
     }
 }
