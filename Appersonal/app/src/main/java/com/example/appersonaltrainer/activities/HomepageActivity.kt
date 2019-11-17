@@ -27,7 +27,6 @@ class HomepageActivity : AppCompatActivity() {
     private fun setupButtonToCreateSeries() {
         create_series_button.setOnClickListener {
             changeToCreateSeriesActivity()
-            //finish()
         }
     }
 

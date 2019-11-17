@@ -19,7 +19,7 @@ class ExerciseViewHolder(exerciseView: View) : RecyclerView.ViewHolder(exerciseV
         exerciseDeleteAction = itemView.findViewById(R.id.item_action)
     }
 
-    fun bind(exercise : Exercise, activity: CreateSeriesActivity) {
+    fun bind(exercise: Exercise, activity: CreateSeriesActivity) {
         bindTextInformationForExercise(exercise)
 
         exerciseDeleteAction.setOnClickListener {
@@ -29,7 +29,8 @@ class ExerciseViewHolder(exerciseView: View) : RecyclerView.ViewHolder(exerciseV
 
     private fun bindTextInformationForExercise(exercise: Exercise) {
         nameOfExerciseHolder.text = exercise.name
-        timeOfExerciseHolder.text = exercise.totalDuration.toString() + "s"
+        timeOfExerciseHolder.text =
+            "${exercise.hours}:${exercise.minutes}:${exercise.seconds}"
     }
 
     private fun shouldDeleteExerciseFromSeries(exercise: Exercise, activity: CreateSeriesActivity) {

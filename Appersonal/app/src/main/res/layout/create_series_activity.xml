@@ -16,14 +16,14 @@
     app:layout_constraintBottom_toTopOf="@+id/save_new_series_button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/time_new_exercise"
+    app:layout_constraintTop_toBottomOf="@+id/hours_new_exercise"
     app:layout_constraintVertical_bias="1.0" />
 
   <com.google.android.material.textfield.TextInputLayout
     android:id="@+id/new_exercise_name"
     android:layout_width="299dp"
     android:layout_height="60dp"
-    app:layout_constraintBottom_toTopOf="@+id/time_new_exercise"
+    app:layout_constraintBottom_toTopOf="@+id/hours_new_exercise"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.23"
     app:layout_constraintStart_toStartOf="parent"
@@ -37,21 +37,44 @@
   </com.google.android.material.textfield.TextInputLayout>
 
   <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/time_new_exercise"
-    android:layout_width="308dp"
-    android:layout_height="50dp"
+    android:id="@+id/hours_new_exercise"
+    android:layout_width="106dp"
+    android:layout_height="60dp"
     android:layout_marginTop="22dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginRight="1dp"
     android:layout_marginBottom="10dp"
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.523"
+    app:layout_constraintEnd_toStartOf="@+id/minutes_new_exercise"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/new_exercise_name">
 
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="Tempo do Exercício"
+      android:hint="HH"
+      android:inputType="number" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/seconds_new_exercise"
+    android:layout_width="105dp"
+    android:layout_height="49dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginLeft="1dp"
+    android:layout_marginTop="22dp"
+    android:layout_marginBottom="10dp"
+    app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/minutes_new_exercise"
+    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
+    app:layout_constraintVertical_bias="0.238">
+
+    <com.google.android.material.textfield.TextInputEditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="SS"
       android:inputType="number" />
   </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,6 +111,22 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.502"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/time_new_exercise" />
+    app:layout_constraintTop_toBottomOf="@+id/hours_new_exercise" />
+
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/minutes_new_exercise"
+    android:layout_width="107dp"
+    android:layout_height="52dp"
+    app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
+    app:layout_constraintEnd_toStartOf="@+id/seconds_new_exercise"
+    app:layout_constraintStart_toEndOf="@+id/hours_new_exercise"
+    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name">
+
+    <com.google.android.material.textfield.TextInputEditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="MM"
+      android:inputType="number" />
+  </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,11 +12,13 @@ import com.example.appersonaltrainer.components.Exercise
 import com.example.appersonaltrainer.components.Series
 import com.example.appersonaltrainer.databases.SeriesDB
 import kotlinx.android.synthetic.main.create_series_activity.add_new_exercise_button
+import kotlinx.android.synthetic.main.create_series_activity.hours_new_exercise
 import kotlinx.android.synthetic.main.create_series_activity.list_of_exercises
+import kotlinx.android.synthetic.main.create_series_activity.minutes_new_exercise
 import kotlinx.android.synthetic.main.create_series_activity.new_exercise_name
 import kotlinx.android.synthetic.main.create_series_activity.new_series_name
 import kotlinx.android.synthetic.main.create_series_activity.save_new_series_button
-import kotlinx.android.synthetic.main.create_series_activity.time_new_exercise
+import kotlinx.android.synthetic.main.create_series_activity.seconds_new_exercise
 import org.jetbrains.anko.doAsync
 
 class CreateSeriesActivity : AppCompatActivity() {
@@ -41,7 +43,7 @@ class CreateSeriesActivity : AppCompatActivity() {
     }
 
     private fun convertUserInputExerciseAndAddToSeries() {
-        val exercise  = createExerciseFromUserInput()
+        val exercise = createExerciseFromUserInput()
         addExerciseToSeries(exercise)
 
         seriesBeingCreated.name = new_series_name.editText!!.text.toString()
@@ -49,17 +51,15 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun createExerciseFromUserInput(): Exercise {
         val exerciseName: String = getExerciseNameFromUserInput()
-        val exerciseDuration: Long = getDurationOfExerciseFromUserInput()
+        val hours: Long = hours_new_exercise.editText!!.text.toString().toLong()
+        val minutes: Long = minutes_new_exercise.editText!!.text.toString().toLong()
+        val seconds: Long = seconds_new_exercise.editText!!.text.toString().toLong()
 
-        return Exercise(exerciseName, exerciseDuration)
+        return Exercise(exerciseName, hours, minutes, seconds)
     }
 
     private fun getExerciseNameFromUserInput(): String {
         return new_exercise_name.editText!!.text.toString()
-    }
-
-    private fun getDurationOfExerciseFromUserInput(): Long {
-        return time_new_exercise.editText!!.text.toString().toLong()
     }
 
     private fun addExerciseToSeries(exercise: Exercise) {
@@ -76,7 +76,11 @@ class CreateSeriesActivity : AppCompatActivity() {
             }
             val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
 
-            Toast.makeText(this@CreateSeriesActivity, "Atividade salva com sucesso!", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@CreateSeriesActivity,
+                "Atividade salva com sucesso!",
+                Toast.LENGTH_LONG
+            ).show()
             startActivity(changeToHomepageActivity)
             finish()
         }
