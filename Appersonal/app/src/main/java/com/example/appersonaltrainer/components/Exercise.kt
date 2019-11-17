@@ -1,12 +1,10 @@
 package com.example.appersonaltrainer.components
 
-import kotlin.random.Random
-
 data class Exercise(
     val name: String,
-    val totalDuration: Long,
-
-    val id: String = Random.nextInt().toString()
+    val hours: Long,
+    val minutes: Long,
+    val seconds: Long
 ) {
     override fun toString(): String {
         return name
