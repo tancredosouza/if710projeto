@@ -52,7 +52,8 @@
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="HH"
+      android:hint="Horas"
+      android:text="00"
       android:inputType="number" />
 
   </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +75,8 @@
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="SS"
+      android:hint="Segundos"
+      android:text="00"
       android:inputType="number" />
   </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +127,8 @@
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="MM"
+      android:hint="Minutos"
+      android:text="00"
       android:inputType="number" />
   </com.google.android.material.textfield.TextInputLayout>
 

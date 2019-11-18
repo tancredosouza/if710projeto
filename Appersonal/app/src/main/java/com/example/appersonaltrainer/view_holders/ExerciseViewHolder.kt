@@ -29,8 +29,7 @@ class ExerciseViewHolder(exerciseView: View) : RecyclerView.ViewHolder(exerciseV
 
     private fun bindTextInformationForExercise(exercise: Exercise) {
         nameOfExerciseHolder.text = exercise.name
-        timeOfExerciseHolder.text =
-            "${exercise.hours}:${exercise.minutes}:${exercise.seconds}"
+        timeOfExerciseHolder.text = exercise.totalTime.toString()
     }
 
     private fun shouldDeleteExerciseFromSeries(exercise: Exercise, activity: CreateSeriesActivity) {
