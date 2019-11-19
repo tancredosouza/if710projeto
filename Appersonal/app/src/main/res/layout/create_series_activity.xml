@@ -19,7 +19,7 @@
     app:layout_constraintTop_toBottomOf="@+id/hours_new_exercise"
     app:layout_constraintVertical_bias="1.0" />
 
-  <com.google.android.material.textfield.TextInputLayout
+  <EditText
     android:id="@+id/new_exercise_name"
     android:layout_width="299dp"
     android:layout_height="60dp"
@@ -28,15 +28,11 @@
     app:layout_constraintHorizontal_bias="0.23"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/new_series_name"
-    app:layout_constraintVertical_bias="0.203">
+    app:layout_constraintVertical_bias="0.203"
+      android:hint="Nome do Exercício"
+  />
 
-    <com.google.android.material.textfield.TextInputEditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="Nome do Exercício" />
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <com.google.android.material.textfield.TextInputLayout
+  <EditText
     android:id="@+id/hours_new_exercise"
     android:layout_width="106dp"
     android:layout_height="60dp"
@@ -47,18 +43,12 @@
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
     app:layout_constraintEnd_toStartOf="@+id/minutes_new_exercise"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
       android:hint="Horas"
-      android:text="00"
-      android:inputType="number" />
+      android:inputType="number"
+  />
 
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <com.google.android.material.textfield.TextInputLayout
+  <EditText
     android:id="@+id/seconds_new_exercise"
     android:layout_width="105dp"
     android:layout_height="49dp"
@@ -70,29 +60,19 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@+id/minutes_new_exercise"
     app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
-    app:layout_constraintVertical_bias="0.238">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+    app:layout_constraintVertical_bias="0.238"
       android:hint="Segundos"
-      android:text="00"
-      android:inputType="number" />
-  </com.google.android.material.textfield.TextInputLayout>
+      android:inputType="number"
+  />
 
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/new_series_name"
+  <EditText
     android:layout_width="321dp"
     android:layout_height="61dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="Nome da Série" />
-  </com.google.android.material.textfield.TextInputLayout>
+    app:layout_constraintTop_toTopOf="parent"
+    android:id="@+id/new_series_name"
+    android:hint="Nome da Série" />
 
   <Button
     android:id="@+id/save_new_series_button"
@@ -115,21 +95,15 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/hours_new_exercise" />
 
-  <com.google.android.material.textfield.TextInputLayout
+  <EditText
     android:id="@+id/minutes_new_exercise"
     android:layout_width="107dp"
     android:layout_height="52dp"
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
     app:layout_constraintEnd_toStartOf="@+id/seconds_new_exercise"
     app:layout_constraintStart_toEndOf="@+id/hours_new_exercise"
-    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name">
-
-    <com.google.android.material.textfield.TextInputEditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
       android:hint="Minutos"
-      android:text="00"
       android:inputType="number" />
-  </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.appersonaltrainer.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,11 +33,11 @@ class CreateSeriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_series_activity)
 
-        val minutes = findViewById<TextInputLayout>(R.id.minutes_new_exercise)
-        val seconds = findViewById<TextInputLayout>(R.id.minutes_new_exercise)
+        val minutes = findViewById<EditText>(R.id.minutes_new_exercise)
+        val seconds = findViewById<EditText>(R.id.minutes_new_exercise)
 
-        minutes.editText!!.filters = arrayOf(MinMaxFilter)
-        seconds.editText!!.filters = arrayOf(MinMaxFilter)
+        minutes.filters = arrayOf(MinMaxFilter)
+        seconds.filters = arrayOf(MinMaxFilter)
 
         setupButtons()
     }
@@ -75,13 +76,13 @@ class CreateSeriesActivity : AppCompatActivity() {
     }
 
     private fun getExerciseNameFromUserInput(): String {
-        return new_exercise_name.editText!!.text.toString()
+        return new_exercise_name.text.toString()
     }
 
     private fun getExerciseTotalTimeFromUserInput(): Time {
-        val hours = hours_new_exercise.editText!!.text.toString().toLong()
-        val minutes = minutes_new_exercise.editText!!.text.toString().toLong()
-        val seconds = seconds_new_exercise.editText!!.text.toString().toLong()
+        val hours = hours_new_exercise.text.toString().toLong()
+        val minutes = minutes_new_exercise.text.toString().toLong()
+        val seconds = seconds_new_exercise.text.toString().toLong()
 
         return Time(hours, minutes, seconds)
     }
@@ -94,7 +95,7 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun setupSaveSeriesButton() {
         save_new_series_button.setOnClickListener {
-            seriesBeingCreated.name = new_series_name.editText!!.text.toString()
+            seriesBeingCreated.name = new_series_name.text.toString()
 
             if (!seriesBeingCreated.name.isNullOrEmpty()) {
                 addSeriesToDatabase()
