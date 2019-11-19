@@ -134,7 +134,7 @@ class CreateSeriesActivity : AppCompatActivity() {
         return seriesBeingCreated
     }
 
-    fun updateExerciseList() {
+    private fun updateExerciseList() {
         list_of_exercises.apply {
             layoutManager = LinearLayoutManager(this@CreateSeriesActivity)
             adapter = ExerciseAdapter(this@CreateSeriesActivity)
