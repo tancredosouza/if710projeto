@@ -2,7 +2,6 @@ package com.example.appersonaltrainer.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +23,7 @@ import kotlinx.android.synthetic.main.create_series_activity.new_series_name
 import kotlinx.android.synthetic.main.create_series_activity.save_new_series_button
 import kotlinx.android.synthetic.main.create_series_activity.seconds_new_exercise
 import org.jetbrains.anko.doAsync
+import java.util.InvalidPropertiesFormatException
 
 class CreateSeriesActivity : AppCompatActivity() {
     private val seriesBeingCreated: Series = Series()
@@ -48,25 +48,28 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun setupAddNewExerciseButton() {
         add_new_exercise_button.setOnClickListener {
-            createExerciseAndAddToSeries()
-
-            seriesBeingCreated.name = new_series_name.editText!!.text.toString()
+            addExerciseFromUserInputToSeries()
         }
     }
 
-    private fun createExerciseAndAddToSeries() {
+    private fun addExerciseFromUserInputToSeries() {
         try {
             val exercise = createExerciseFromUserInput()
             addExerciseToSeries(exercise)
-
         } catch(e : NumberFormatException) {
             Toast.makeText(this, "Campo de tempo não pode estar vazio!", Toast.LENGTH_LONG).show()
+        } catch(e: InvalidPropertiesFormatException) {
+            Toast.makeText(this, "Nome do exercício não pode estar vazio!", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun createExerciseFromUserInput(): Exercise {
         val exerciseName: String = getExerciseNameFromUserInput()
         val exerciseTotalTime: Time = getExerciseTotalTimeFromUserInput()
+
+        if (exerciseName.isEmpty()) {
+            throw InvalidPropertiesFormatException("")
+        }
 
         return Exercise(exerciseName, exerciseTotalTime)
     }
@@ -91,20 +94,35 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun setupSaveSeriesButton() {
         save_new_series_button.setOnClickListener {
-            doAsync {
-                val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
-                db.getAccessObject().insertSeries(seriesBeingCreated)
-            }
-            val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
+            seriesBeingCreated.name = new_series_name.editText!!.text.toString()
 
-            Toast.makeText(
-                this@CreateSeriesActivity,
-                "Atividade salva com sucesso!",
-                Toast.LENGTH_LONG
-            ).show()
-            startActivity(changeToHomepageActivity)
-            finish()
+            if (!seriesBeingCreated.name.isNullOrEmpty()) {
+                addSeriesToDatabase()
+                toastUserAndReturnToHomepageActivity()
+            } else {
+                Toast.makeText(this, "Nome da série não pode ser vazio!", Toast.LENGTH_LONG).show()
+            }
         }
+    }
+
+
+    private fun addSeriesToDatabase() {
+        doAsync {
+            val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
+            db.getAccessObject().insertSeries(seriesBeingCreated)
+        }
+    }
+
+    private fun toastUserAndReturnToHomepageActivity() {
+        Toast.makeText(
+            this@CreateSeriesActivity,
+            "Atividade salva com sucesso!",
+            Toast.LENGTH_LONG
+        ).show()
+
+        val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
+        startActivity(changeToHomepageActivity)
+        finish()
     }
 
     fun deleteExerciseFromSeries(exercise: Exercise) {
@@ -125,7 +143,6 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         loadActivityList()
     }
 
