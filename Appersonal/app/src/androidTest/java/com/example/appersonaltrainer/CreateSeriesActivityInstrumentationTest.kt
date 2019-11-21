@@ -112,11 +112,15 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun userPressesButtonToSaveSeries() {
-        onView(withId(R.id.save_new_series_button)).perform(click())
+        pressButton(R.id.save_new_series_button)
     }
 
     private fun userPressesButtonToSaveExercise() {
-        onView(withId(R.id.add_new_exercise_button)).perform(click())
+        pressButton(R.id.add_new_exercise_button)
+    }
+
+    private fun pressButton(buttonId: Int) {
+        onView(withId(buttonId)).perform(click())
     }
 
     private fun shouldThrowToastWithMessage(s: String) {
