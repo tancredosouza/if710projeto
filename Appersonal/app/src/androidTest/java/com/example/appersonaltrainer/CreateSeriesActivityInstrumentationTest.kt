@@ -9,6 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
+import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.components.Time
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,10 +23,109 @@ class CreateSeriesActivityInstrumentationTest {
 
     @Test
     fun whenUserTriesToCreateNamelessSeries_shouldOnlyDisplayToast() {
-        onView(withId(R.id.new_series_name)).perform(typeText(""))
+        userPressesButtonToSaveSeries()
 
+        shouldThrowToastWithMessage("Nome da série não pode ser vazio!")
+    }
+
+    @Test
+    fun whenUserTriesToCreateNamelessExercise_shouldOnlyDisplayToast() {
+        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+
+        userCreatesExercise(someExercise)
+
+        userClearsExerciseNameField()
+
+        userPressesButtonToSaveExercise()
+
+        shouldThrowToastWithMessage("Nome do exercício não pode estar vazio!")
+    }
+
+    @Test
+    fun whenUserTriesToCreateExerciseWithoutHours_shouldOnlyDisplayToast() {
+        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+
+        userCreatesExercise(someExercise)
+
+        userClearsExerciseHoursField()
+
+        userPressesButtonToSaveExercise()
+
+        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+    }
+
+    @Test
+    fun whenUserTriesToCreateExerciseWithoutMinutes_shouldOnlyDisplayToast() {
+        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+
+        userCreatesExercise(someExercise)
+
+        userClearsExerciseMinutesField()
+
+        userPressesButtonToSaveExercise()
+
+        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+    }
+
+    @Test
+    fun whenUserTriesToCreateExerciseWithoutSeconds_shouldOnlyDisplayToast() {
+        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+
+        userCreatesExercise(someExercise)
+
+        userClearsExerciseSecondsField()
+
+        userPressesButtonToSaveExercise()
+
+        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+    }
+
+    private fun fillSeriesNameAvoidingIncorrectToastToBeThrown() {
+        onView(withId(R.id.series_name)).perform(typeText(someName))
+    }
+
+    private fun userCreatesExercise(e: Exercise) {
+        onView(withId(R.id.name_of_exercise)).perform(typeText(e.name))
+        onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
+        onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
+        onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
+    }
+
+    private fun userClearsExerciseNameField() {
+        clearField(R.id.new_exercise_name)
+    }
+
+    private fun userClearsExerciseHoursField() {
+        clearField(R.id.hours_new_exercise)
+    }
+
+    private fun userClearsExerciseMinutesField() {
+        clearField(R.id.minutes_new_exercise)
+    }
+
+    private fun userClearsExerciseSecondsField() {
+        clearField(R.id.seconds_new_exercise)
+    }
+
+    private fun clearField(field: Int) {
+        onView(withId(field)).perform(typeText(""))
+    }
+
+    private fun userPressesButtonToSaveSeries() {
         onView(withId(R.id.save_new_series_button)).perform(click())
+    }
 
-        ToastMatcher.onToast("Nome da série não pode ser vazio!").check(matches(isDisplayed()))
+    private fun userPressesButtonToSaveExercise() {
+        onView(withId(R.id.add_new_exercise_button)).perform(click())
+    }
+
+    private fun shouldThrowToastWithMessage(s: String) {
+        ToastMatcher.onToast(s).check(matches(isDisplayed()))
+    }
+
+    companion object {
+        val someName: String = "SOME_NAME"
+        val someExercise: Exercise = Exercise(someName, Time(10, 40, 50))
+        val exerciseWithInvalidTime: Exercise = Exercise(someName, Time(10, 90, 72))
     }
 }
