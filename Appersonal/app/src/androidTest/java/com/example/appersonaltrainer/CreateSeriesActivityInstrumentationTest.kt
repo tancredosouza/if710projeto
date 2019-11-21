@@ -2,6 +2,7 @@ package com.example.appersonaltrainer
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -81,11 +82,11 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun fillSeriesNameAvoidingIncorrectToastToBeThrown() {
-        onView(withId(R.id.series_name)).perform(typeText(someName))
+        onView(withId(R.id.new_series_name)).perform(typeText(someName))
     }
 
     private fun userCreatesExercise(e: Exercise) {
-        onView(withId(R.id.name_of_exercise)).perform(typeText(e.name))
+        onView(withId(R.id.new_exercise_name)).perform(typeText(e.name))
         onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
         onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
         onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
@@ -108,7 +109,7 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun clearField(field: Int) {
-        onView(withId(field)).perform(typeText(""))
+        onView(withId(field)).perform(replaceText(""))
     }
 
     private fun userPressesButtonToSaveSeries() {
