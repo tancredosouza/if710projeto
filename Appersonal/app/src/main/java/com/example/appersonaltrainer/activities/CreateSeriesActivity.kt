@@ -57,10 +57,11 @@ class CreateSeriesActivity : AppCompatActivity() {
         try {
             val exercise = createExerciseFromUserInput()
             addExerciseToSeries(exercise)
-        } catch(e : NumberFormatException) {
+        } catch (e: NumberFormatException) {
             Toast.makeText(this, "Campo de tempo não pode estar vazio!", Toast.LENGTH_LONG).show()
-        } catch(e: InvalidPropertiesFormatException) {
-            Toast.makeText(this, "Nome do exercício não pode estar vazio!", Toast.LENGTH_LONG).show()
+        } catch (e: InvalidPropertiesFormatException) {
+            Toast.makeText(this, "Nome do exercício não pode estar vazio!", Toast.LENGTH_LONG)
+                .show()
         }
     }
 
@@ -97,7 +98,13 @@ class CreateSeriesActivity : AppCompatActivity() {
         save_new_series_button.setOnClickListener {
             seriesBeingCreated.name = new_series_name.text.toString()
 
-            if (!seriesBeingCreated.name.isNullOrEmpty()) {
+            if (seriesBeingCreated.exercises.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    "Série deve conter pelo menos um exercício!",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (!seriesBeingCreated.name.isNullOrEmpty()) {
                 addSeriesToDatabase()
                 toastUserAndReturnToHomepageActivity()
             } else {
