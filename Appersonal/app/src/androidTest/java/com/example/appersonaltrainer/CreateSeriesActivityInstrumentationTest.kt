@@ -3,7 +3,6 @@ package com.example.appersonaltrainer
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -34,12 +33,21 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     @Test
+    fun whenUserCreatesExerciseWithInvalidTime_shouldNotDisplayInvalidTimes() {
+        userCreatesExercise(exerciseWithInvalidTime)
+
+        userPressesButtonToSaveExercise()
+
+        assertIsAddedToSeries(exerciseWithValidTime)
+    }
+
+    @Test
     fun whenUserCreatesExercise_shouldSaveToSeries() {
         userCreatesExercise(someExercise)
 
         userPressesButtonToSaveExercise()
 
-        assertExerciseIsAddedToSeries()
+        assertIsAddedToSeries(someExercise)
     }
 
     @Test
@@ -156,11 +164,9 @@ class CreateSeriesActivityInstrumentationTest {
         ToastMatcher.onToast(s).check(matches(isDisplayed()))
     }
 
-    private fun assertExerciseIsAddedToSeries() {
+    private fun assertIsAddedToSeries(e: Exercise) {
         assert(
-            activityRule.activity.getSeriesToBeCreated().exercises.contains(
-                exerciseWithInvalidTime
-            )
+            activityRule.activity.getSeriesToBeCreated().exercises.contains(e)
         )
     }
 
@@ -168,5 +174,6 @@ class CreateSeriesActivityInstrumentationTest {
         const val someName: String = "SOME_NAME"
         val someExercise: Exercise = Exercise(someName, Time(10, 40, 50))
         val exerciseWithInvalidTime: Exercise = Exercise(someName, Time(10, 90, 72))
+        val exerciseWithValidTime: Exercise = Exercise(someName, Time(10, 9, 7))
     }
 }
