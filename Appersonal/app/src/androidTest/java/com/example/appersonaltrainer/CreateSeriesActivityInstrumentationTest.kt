@@ -1,7 +1,9 @@
 package com.example.appersonaltrainer
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -23,7 +25,29 @@ class CreateSeriesActivityInstrumentationTest {
         ActivityTestRule(CreateSeriesActivity::class.java)
 
     @Test
+    fun whenUserCreatesSeriesWithoutExercise_shouldOnlyDisplayToast() {
+        userFillsSeriesName()
+
+        userPressesButtonToSaveSeries()
+
+        shouldThrowToastWithMessage("Série deve conter pelo menos um exercício!")
+    }
+
+    @Test
+    fun whenUserCreatesExercise_shouldSaveToSeries() {
+        userCreatesExercise(someExercise)
+
+        userPressesButtonToSaveExercise()
+
+        assertExerciseIsAddedToSeries()
+    }
+
+    @Test
     fun whenUserTriesToCreateNamelessSeries_shouldOnlyDisplayToast() {
+        userCreatesExercise(someExercise)
+
+        userPressesButtonToSaveExercise()
+
         userPressesButtonToSaveSeries()
 
         shouldThrowToastWithMessage("Nome da série não pode ser vazio!")
@@ -31,7 +55,7 @@ class CreateSeriesActivityInstrumentationTest {
 
     @Test
     fun whenUserTriesToCreateNamelessExercise_shouldOnlyDisplayToast() {
-        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+        userFillsSeriesName()
 
         userCreatesExercise(someExercise)
 
@@ -44,7 +68,7 @@ class CreateSeriesActivityInstrumentationTest {
 
     @Test
     fun whenUserTriesToCreateExerciseWithoutHours_shouldOnlyDisplayToast() {
-        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+        userFillsSeriesName()
 
         userCreatesExercise(someExercise)
 
@@ -57,7 +81,7 @@ class CreateSeriesActivityInstrumentationTest {
 
     @Test
     fun whenUserTriesToCreateExerciseWithoutMinutes_shouldOnlyDisplayToast() {
-        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+        userFillsSeriesName()
 
         userCreatesExercise(someExercise)
 
@@ -70,7 +94,7 @@ class CreateSeriesActivityInstrumentationTest {
 
     @Test
     fun whenUserTriesToCreateExerciseWithoutSeconds_shouldOnlyDisplayToast() {
-        fillSeriesNameAvoidingIncorrectToastToBeThrown()
+        userFillsSeriesName()
 
         userCreatesExercise(someExercise)
 
@@ -81,8 +105,10 @@ class CreateSeriesActivityInstrumentationTest {
         shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
     }
 
-    private fun fillSeriesNameAvoidingIncorrectToastToBeThrown() {
+    private fun userFillsSeriesName() {
         onView(withId(R.id.new_series_name)).perform(typeText(someName))
+
+        Espresso.closeSoftKeyboard()
     }
 
     private fun userCreatesExercise(e: Exercise) {
@@ -90,6 +116,8 @@ class CreateSeriesActivityInstrumentationTest {
         onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
         onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
         onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
+
+        Espresso.closeSoftKeyboard()
     }
 
     private fun userClearsExerciseNameField() {
@@ -128,8 +156,16 @@ class CreateSeriesActivityInstrumentationTest {
         ToastMatcher.onToast(s).check(matches(isDisplayed()))
     }
 
+    private fun assertExerciseIsAddedToSeries() {
+        assert(
+            activityRule.activity.getSeriesToBeCreated().exercises.contains(
+                exerciseWithInvalidTime
+            )
+        )
+    }
+
     companion object {
-        val someName: String = "SOME_NAME"
+        const val someName: String = "SOME_NAME"
         val someExercise: Exercise = Exercise(someName, Time(10, 40, 50))
         val exerciseWithInvalidTime: Exercise = Exercise(someName, Time(10, 90, 72))
     }
