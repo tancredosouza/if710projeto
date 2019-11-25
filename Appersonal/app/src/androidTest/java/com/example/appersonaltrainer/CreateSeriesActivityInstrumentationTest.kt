@@ -12,7 +12,9 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
 import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.components.ExerciseType
 import com.example.appersonaltrainer.components.Time
+import junit.framework.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -114,13 +116,13 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun userFillsSeriesName() {
-        onView(withId(R.id.new_series_name)).perform(typeText(someName))
+        onView(withId(R.id.new_series_name)).perform(typeText(someSeriesName))
 
         Espresso.closeSoftKeyboard()
     }
 
     private fun userCreatesExercise(e: Exercise) {
-        onView(withId(R.id.new_exercise_name)).perform(typeText(e.name))
+        onView(withId(R.id.new_exercise_button)).perform(typeText(e.name.toString()))
         onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
         onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
         onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
@@ -129,7 +131,7 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun userClearsExerciseNameField() {
-        clearField(R.id.new_exercise_name)
+        clearField(R.id.new_exercise_button)
     }
 
     private fun userClearsExerciseHoursField() {
@@ -165,15 +167,16 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun assertIsAddedToSeries(e: Exercise) {
-        assert(
+        assertTrue(
             activityRule.activity.getSeriesToBeCreated().exercises.contains(e)
         )
     }
 
     companion object {
-        const val someName: String = "SOME_NAME"
-        val someExercise: Exercise = Exercise(someName, Time(10, 40, 50))
-        val exerciseWithInvalidTime: Exercise = Exercise(someName, Time(10, 90, 72))
-        val exerciseWithValidTime: Exercise = Exercise(someName, Time(10, 9, 7))
+        val someSeriesName: String = "SOME_NAME"
+        val someExerciseType: ExerciseType = ExerciseType.CAMINHADA
+        val someExercise: Exercise = Exercise(someExerciseType, Time(10, 40, 50))
+        val exerciseWithInvalidTime: Exercise = Exercise(someExerciseType, Time(10, 90, 72))
+        val exerciseWithValidTime: Exercise = Exercise(someExerciseType, Time(10, 9, 7))
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group>
+    <item android:id="@+id/caminhada_exercise"
+      android:title="CAMINHADA" />
+    <item android:id="@+id/corrida_exercise"
+      android:title="CORRIDA" />
+    <item android:id="@+id/yoga_exercise"
+      android:title="YOGA" />
+    <item android:id="@+id/ciclismo_exercise"
+      android:title="CICLISMO" />
+  </group>
+</menu>

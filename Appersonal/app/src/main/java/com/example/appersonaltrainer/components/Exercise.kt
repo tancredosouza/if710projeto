@@ -1,10 +1,10 @@
 package com.example.appersonaltrainer.components
 
 data class Exercise(
-    val name: String,
+    val name: ExerciseType,
     val totalTime: Time
 ) {
     override fun toString(): String {
-        return name
+        return name.toString()
     }
 }

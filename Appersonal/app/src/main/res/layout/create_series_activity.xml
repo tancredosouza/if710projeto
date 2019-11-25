@@ -19,51 +19,48 @@
     app:layout_constraintTop_toBottomOf="@+id/hours_new_exercise"
     app:layout_constraintVertical_bias="1.0" />
 
-  <EditText
-    android:id="@+id/new_exercise_name"
-    android:layout_width="299dp"
-    android:layout_height="60dp"
+  <Button
+    android:id="@+id/new_exercise_button"
+    android:layout_width="199dp"
+    android:layout_height="56dp"
+    android:text="Tipo do Exercício"
     app:layout_constraintBottom_toTopOf="@+id/hours_new_exercise"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.23"
+    app:layout_constraintHorizontal_bias="0.455"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/new_series_name"
-    app:layout_constraintVertical_bias="0.203"
-      android:hint="Nome do Exercício"
-  />
+    app:layout_constraintVertical_bias="0.203" />
 
   <EditText
     android:id="@+id/hours_new_exercise"
     android:layout_width="106dp"
     android:layout_height="60dp"
-    android:layout_marginTop="22dp"
+    android:layout_marginTop="8dp"
     android:layout_marginEnd="1dp"
     android:layout_marginRight="1dp"
     android:layout_marginBottom="10dp"
+    android:hint="Horas"
+    android:inputType="number"
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
     app:layout_constraintEnd_toStartOf="@+id/minutes_new_exercise"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
-      android:hint="Horas"
-      android:inputType="number"
-  />
+    app:layout_constraintTop_toBottomOf="@+id/exercise_type_text_view" />
 
   <EditText
     android:id="@+id/seconds_new_exercise"
-    android:layout_width="105dp"
-    android:layout_height="49dp"
+    android:layout_width="102dp"
+    android:layout_height="57dp"
     android:layout_marginStart="1dp"
     android:layout_marginLeft="1dp"
     android:layout_marginTop="22dp"
     android:layout_marginBottom="10dp"
+    android:hint="Segundos"
+    android:inputType="number"
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@+id/minutes_new_exercise"
-    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
-    app:layout_constraintVertical_bias="0.238"
-      android:hint="Segundos"
-      android:inputType="number"
-  />
+    app:layout_constraintTop_toBottomOf="@+id/exercise_type_text_view"
+    app:layout_constraintVertical_bias="0.783" />
 
   <EditText
     android:layout_width="321dp"
@@ -78,7 +75,7 @@
     android:id="@+id/save_new_series_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="34dp"
+    android:layout_marginTop="16dp"
     android:text="SALVAR"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -97,13 +94,24 @@
 
   <EditText
     android:id="@+id/minutes_new_exercise"
-    android:layout_width="107dp"
-    android:layout_height="52dp"
+    android:layout_width="112dp"
+    android:layout_height="59dp"
+    android:hint="Minutos"
+    android:inputType="number"
     app:layout_constraintBottom_toTopOf="@+id/add_new_exercise_button"
     app:layout_constraintEnd_toStartOf="@+id/seconds_new_exercise"
     app:layout_constraintStart_toEndOf="@+id/hours_new_exercise"
-    app:layout_constraintTop_toBottomOf="@+id/new_exercise_name"
-      android:hint="Minutos"
-      android:inputType="number" />
+    app:layout_constraintTop_toBottomOf="@+id/exercise_type_text_view"
+    app:layout_constraintVertical_bias="0.761" />
+
+  <TextView
+    android:id="@+id/exercise_type_text_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="18sp"
+    app:layout_constraintBottom_toTopOf="@+id/hours_new_exercise"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/new_exercise_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
