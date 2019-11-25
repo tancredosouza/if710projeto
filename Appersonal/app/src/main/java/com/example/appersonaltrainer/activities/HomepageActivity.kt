@@ -17,6 +17,8 @@ class HomepageActivity : AppCompatActivity() {
 
         homepageViewModel = HomepageViewModel(applicationContext, this)
 
+        homepageViewModel.loadSeriesOfUser()
+
         setupButtons()
     }
 
