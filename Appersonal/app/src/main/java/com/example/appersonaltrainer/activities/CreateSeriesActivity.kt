@@ -56,9 +56,7 @@ class CreateSeriesActivity : AppCompatActivity() {
     private fun setupSetExerciseTypeButton() {
         val clickListener = View.OnClickListener { view ->
             when (view.id) {
-                R.id.new_exercise_button -> {
-                    showPopup(view)
-                }
+                R.id.new_exercise_button -> showPopup(view)
             }
         }
 
@@ -76,7 +74,8 @@ class CreateSeriesActivity : AppCompatActivity() {
             val exercise = createExerciseFromUserInput()
             addExerciseToSeries(exercise)
         } catch (e: NumberFormatException) {
-            Toast.makeText(this, R.string.exercise_has_empty_time_field_error, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.exercise_has_empty_time_field_error, Toast.LENGTH_LONG)
+                .show()
         } catch (e: InvalidPropertiesFormatException) {
             Toast.makeText(this, R.string.null_exercise_type_error, Toast.LENGTH_LONG).show()
         }
