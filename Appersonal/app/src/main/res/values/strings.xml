@@ -10,4 +10,6 @@
   <string name="series_has_no_name_error">Nome da série não pode ser vazio!</string>
   <string name="series_has_no_exercise_error">Série deve conter pelo menos um exercício!</string>
   <string name="exercise_has_empty_time_field_error">Campo de tempo não pode estar vazio!</string>
+  <string name="null_exercise_type_error">Defina qual o tipo do exercício!</string>
+  <string name="series_saved_successfully">Atividade salva com sucesso!</string>
 </resources>
