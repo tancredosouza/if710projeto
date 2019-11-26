@@ -28,7 +28,7 @@ class ExerciseViewHolder(exerciseView: View) : RecyclerView.ViewHolder(exerciseV
     }
 
     private fun bindTextInformationForExercise(exercise: Exercise) {
-        nameOfExerciseHolder.text = exercise.name.toString()
+        nameOfExerciseHolder.text = exercise.type.toString()
         timeOfExerciseHolder.text = exercise.totalTime.toString()
     }
 
