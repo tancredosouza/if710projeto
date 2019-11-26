@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">Appersonal Trainer</string>
-    <string name="action_settings">Settings</string>
+  <string name="app_name">Appersonal Trainer</string>
+  <string name="action_settings">Settings</string>
   <string name="totalExerciseTime">20</string>
   <string name="minhas_atividades">Minhas Atividades</string>
   <string name="timer_activity_name">timer_activity</string>
   <string name="homepage_activity_name">homepage_activity</string>
   <string name="create_series_title">Criar Série</string>
-  <string name="create_series_activity_name">craete_series_activit</string>
+  <string name="create_series_activity_name">create_series_activity</string>
+  <string name="series_has_no_name_error">Nome da série não pode ser vazio!</string>
+  <string name="series_has_no_exercise_error">Série deve conter pelo menos um exercício!</string>
+  <string name="exercise_has_empty_time_field_error">Campo de tempo não pode estar vazio!</string>
 </resources>
