@@ -33,7 +33,7 @@ class CreateSeriesActivityInstrumentationTest {
 
         userPressesButtonToSaveSeries()
 
-        shouldThrowToastWithMessage("Série deve conter pelo menos um exercício!")
+        shouldThrowToastWithMessage(R.string.series_has_no_exercise_error)
     }
 
     @Test
@@ -62,7 +62,7 @@ class CreateSeriesActivityInstrumentationTest {
 
         userPressesButtonToSaveSeries()
 
-        shouldThrowToastWithMessage("Nome da série não pode ser vazio!")
+        shouldThrowToastWithMessage(R.string.series_has_no_name_error)
     }
 
     @Test
@@ -75,7 +75,7 @@ class CreateSeriesActivityInstrumentationTest {
 
         userPressesButtonToSaveExercise()
 
-        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+        shouldThrowToastWithMessage(R.string.exercise_has_empty_time_field_error)
     }
 
     @Test
@@ -88,7 +88,7 @@ class CreateSeriesActivityInstrumentationTest {
 
         userPressesButtonToSaveExercise()
 
-        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+        shouldThrowToastWithMessage(R.string.exercise_has_empty_time_field_error)
     }
 
     @Test
@@ -101,7 +101,7 @@ class CreateSeriesActivityInstrumentationTest {
 
         userPressesButtonToSaveExercise()
 
-        shouldThrowToastWithMessage("Campo de tempo não pode estar vazio!")
+        shouldThrowToastWithMessage(R.string.exercise_has_empty_time_field_error)
     }
 
     private fun userFillsSeriesName() {
@@ -166,8 +166,8 @@ class CreateSeriesActivityInstrumentationTest {
         onView(withText(text)).inRoot(isPlatformPopup()).perform(click())
     }
 
-    private fun shouldThrowToastWithMessage(s: String) {
-        ToastMatcher.onToast(s).check(matches(isDisplayed()))
+    private fun shouldThrowToastWithMessage(messageId: Int) {
+        ToastMatcher.onToast(messageId).check(matches(isDisplayed()))
     }
 
     private fun assertIsAddedToSeries(e: Exercise) {
