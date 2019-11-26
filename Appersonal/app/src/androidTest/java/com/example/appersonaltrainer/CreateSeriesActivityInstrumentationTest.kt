@@ -55,6 +55,13 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     @Test
+    fun whenUserCreatesAndSavesMultipleExercises_shouldSaveToSeries() {
+        userCreatesAndSavesMultipleExercises(sampleExercises)
+
+        assertAllExercisesWereAdded(expectedExercises)
+    }
+
+    @Test
     fun whenUserTriesToCreateNamelessSeries_shouldOnlyDisplayToast() {
         userCreatesExercise(someExercise)
 
@@ -105,7 +112,7 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun userFillsSeriesName() {
-        onView(withId(R.id.new_series_name)).perform(typeText(someSeriesName))
+        onView(withId(R.id.new_series_name)).perform(typeText(seriesName))
 
         Espresso.closeSoftKeyboard()
     }
@@ -170,6 +177,19 @@ class CreateSeriesActivityInstrumentationTest {
         ToastMatcher.onToast(messageId).check(matches(isDisplayed()))
     }
 
+    private fun userCreatesAndSavesMultipleExercises(listOfExercises: List<Exercise>) {
+        for (exercise in listOfExercises) {
+            userCreatesExercise(exercise)
+            userPressesButtonToSaveExercise()
+        }
+    }
+
+    private fun assertAllExercisesWereAdded(expected: List<Exercise>) {
+        for (exercise in expected) {
+            assertIsAddedToSeries(exercise)
+        }
+    }
+
     private fun assertIsAddedToSeries(e: Exercise) {
         assertTrue(
             activityRule.activity.getSeriesToBeCreated().exercises.contains(e)
@@ -177,10 +197,29 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     companion object {
-        val someSeriesName: String = "SOME_NAME"
-        val someExerciseType: ExerciseType = ExerciseType.CAMINHADA
-        val someExercise: Exercise = Exercise(someExerciseType, Time(10, 40, 50))
-        val exerciseWithInvalidTime: Exercise = Exercise(someExerciseType, Time(10, 90, 72))
-        val exerciseWithValidTime: Exercise = Exercise(someExerciseType, Time(10, 9, 7))
+        const val seriesName: String = "SERIES_NAME"
+
+        val someExercise: Exercise = Exercise(ExerciseType.CAMINHADA, Time(10, 40, 50))
+
+        val exerciseWithInvalidTime: Exercise = Exercise(ExerciseType.CICLISMO, Time(10, 90, 72))
+        val exerciseWithValidTime: Exercise = Exercise(ExerciseType.CICLISMO, Time(10, 9, 7))
+
+        val sampleExercises: List<Exercise> =
+            listOf(
+                Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
+                Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
+                Exercise(ExerciseType.CORRIDA, Time(0, 50, 0)),
+                Exercise(ExerciseType.CICLISMO, Time(0, 30, 0)),
+                exerciseWithInvalidTime
+            )
+
+        val expectedExercises: List<Exercise> =
+            listOf(
+                Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
+                Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
+                Exercise(ExerciseType.CORRIDA, Time(0, 50, 0)),
+                Exercise(ExerciseType.CICLISMO, Time(0, 30, 0)),
+                exerciseWithValidTime
+            )
     }
 }
