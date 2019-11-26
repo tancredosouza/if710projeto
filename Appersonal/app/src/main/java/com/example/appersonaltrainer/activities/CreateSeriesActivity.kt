@@ -93,6 +93,9 @@ class CreateSeriesActivity : AppCompatActivity() {
 
         currExerciseType = null
         exercise_type_text_view.text = ""
+        hours_new_exercise.text.clear()
+        minutes_new_exercise.text.clear()
+        seconds_new_exercise.text.clear()
 
         return exerciseFromUserInput
     }
