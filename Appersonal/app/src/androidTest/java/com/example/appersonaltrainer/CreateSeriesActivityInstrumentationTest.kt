@@ -199,12 +199,12 @@ class CreateSeriesActivityInstrumentationTest {
     companion object {
         const val seriesName: String = "SERIES_NAME"
 
-        val someExercise: Exercise = Exercise(ExerciseType.CAMINHADA, Time(10, 40, 50))
+        val someExercise = Exercise(ExerciseType.CAMINHADA, Time(10, 40, 50))
 
-        val exerciseWithInvalidTime: Exercise = Exercise(ExerciseType.CICLISMO, Time(10, 90, 72))
-        val exerciseWithValidTime: Exercise = Exercise(ExerciseType.CICLISMO, Time(10, 9, 7))
+        val exerciseWithInvalidTime = Exercise(ExerciseType.CICLISMO, Time(10, 90, 72))
+        val exerciseWithValidTime = Exercise(ExerciseType.CICLISMO, Time(10, 9, 7))
 
-        val sampleExercises: List<Exercise> =
+        val sampleExercises =
             listOf(
                 Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
                 Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
@@ -213,7 +213,7 @@ class CreateSeriesActivityInstrumentationTest {
                 exerciseWithInvalidTime
             )
 
-        val expectedExercises: List<Exercise> =
+        val expectedExercises =
             listOf(
                 Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
                 Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
