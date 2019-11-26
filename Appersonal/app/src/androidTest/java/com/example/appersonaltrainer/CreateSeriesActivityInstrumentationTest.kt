@@ -6,8 +6,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers.isPlatformPopup
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
@@ -64,19 +66,6 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     @Test
-    fun whenUserTriesToCreateNamelessExercise_shouldOnlyDisplayToast() {
-        userFillsSeriesName()
-
-        userCreatesExercise(someExercise)
-
-        userClearsExerciseNameField()
-
-        userPressesButtonToSaveExercise()
-
-        shouldThrowToastWithMessage("Nome do exercício não pode estar vazio!")
-    }
-
-    @Test
     fun whenUserTriesToCreateExerciseWithoutHours_shouldOnlyDisplayToast() {
         userFillsSeriesName()
 
@@ -122,16 +111,27 @@ class CreateSeriesActivityInstrumentationTest {
     }
 
     private fun userCreatesExercise(e: Exercise) {
-        onView(withId(R.id.new_exercise_button)).perform(typeText(e.name.toString()))
-        onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
-        onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
-        onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
+        userChoosesExerciseType(e.type)
+
+        userFillsTimeFields(e)
 
         Espresso.closeSoftKeyboard()
     }
 
-    private fun userClearsExerciseNameField() {
-        clearField(R.id.new_exercise_button)
+    private fun userChoosesExerciseType(exerciseType: ExerciseType) {
+        pressButton(R.id.new_exercise_button)
+
+        userClicksOnPopUpMenu(exerciseType)
+    }
+
+    private fun userClicksOnPopUpMenu(exerciseType: ExerciseType) {
+        pressPopupItem(exerciseType.toString())
+    }
+
+    private fun userFillsTimeFields(e: Exercise) {
+        onView(withId(R.id.hours_new_exercise)).perform(typeText(e.totalTime.hours.toString()))
+        onView(withId(R.id.minutes_new_exercise)).perform(typeText(e.totalTime.minutes.toString()))
+        onView(withId(R.id.seconds_new_exercise)).perform(typeText(e.totalTime.seconds.toString()))
     }
 
     private fun userClearsExerciseHoursField() {
@@ -150,16 +150,20 @@ class CreateSeriesActivityInstrumentationTest {
         onView(withId(field)).perform(replaceText(""))
     }
 
-    private fun userPressesButtonToSaveSeries() {
-        pressButton(R.id.save_new_series_button)
-    }
-
     private fun userPressesButtonToSaveExercise() {
         pressButton(R.id.add_new_exercise_button)
     }
 
+    private fun userPressesButtonToSaveSeries() {
+        pressButton(R.id.save_new_series_button)
+    }
+
     private fun pressButton(buttonId: Int) {
         onView(withId(buttonId)).perform(click())
+    }
+
+    private fun pressPopupItem(text: String) {
+        onView(withText(text)).inRoot(isPlatformPopup()).perform(click())
     }
 
     private fun shouldThrowToastWithMessage(s: String) {
