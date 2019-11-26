@@ -32,6 +32,7 @@ import java.util.InvalidPropertiesFormatException
 
 class CreateSeriesActivity : AppCompatActivity() {
     private val seriesBeingCreated: Series = Series()
+    private var currExerciseType: ExerciseType? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun setupButtons() {
         setupSetExerciseTypeButton()
-        setupAddNewExerciseButton("olar")
+        setupAddNewExerciseButton()
         setupSaveSeriesButton()
     }
 
@@ -64,33 +65,37 @@ class CreateSeriesActivity : AppCompatActivity() {
         new_exercise_button.setOnClickListener(clickListener)
     }
 
-    private fun setupAddNewExerciseButton(name: String) {
+    private fun setupAddNewExerciseButton() {
         add_new_exercise_button.setOnClickListener {
-            addExerciseFromUserInputToSeries(name)
+            addExerciseFromUserInputToSeries()
         }
     }
 
-    private fun addExerciseFromUserInputToSeries(name: String) {
+    private fun addExerciseFromUserInputToSeries() {
         try {
-            val exercise = createExerciseFromUserInput(name)
+            val exercise = createExerciseFromUserInput()
             addExerciseToSeries(exercise)
         } catch (e: NumberFormatException) {
             Toast.makeText(this, "Campo de tempo não pode estar vazio!", Toast.LENGTH_LONG).show()
         } catch (e: InvalidPropertiesFormatException) {
-            Toast.makeText(this, "Nome do exercício não pode estar vazio!", Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(this, "Defina qual o tipo do exercício!", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun createExerciseFromUserInput(name: String): Exercise {
-        val exerciseName: String = name
+    private fun createExerciseFromUserInput(): Exercise {
+        val exerciseName: String = exercise_type_text_view.text.toString()
         val exerciseTotalTime: Time = getExerciseTotalTimeFromUserInput()
 
-        if (exerciseName.isEmpty()) {
+        if (exerciseName.isEmpty() || currExerciseType == null) {
             throw InvalidPropertiesFormatException("")
         }
 
-        return Exercise(ExerciseType.CAMINHADA, exerciseTotalTime)
+        val exerciseFromUserInput = Exercise(currExerciseType!!, exerciseTotalTime)
+
+        currExerciseType = null
+        exercise_type_text_view.text = ""
+
+        return exerciseFromUserInput
     }
 
     private fun getExerciseTotalTimeFromUserInput(): Time {
@@ -177,16 +182,30 @@ class CreateSeriesActivity : AppCompatActivity() {
     }
 
     private fun showPopup(view: View) {
-        var popup: PopupMenu? = null;
-        popup = PopupMenu(this, view)
+        val popup = PopupMenu(this, view)
         popup.inflate(R.menu.name_exercise_menu)
 
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+        popup.setOnMenuItemClickListener { item: MenuItem? ->
             val exerciseType = item!!.title
             exercise_type_text_view.text = exerciseType
 
+            when (item.itemId) {
+                R.id.ciclismo_exercise -> {
+                    currExerciseType = ExerciseType.CICLISMO
+                }
+                R.id.corrida_exercise -> {
+                    currExerciseType = ExerciseType.CORRIDA
+                }
+                R.id.yoga_exercise -> {
+                    currExerciseType = ExerciseType.YOGA
+                }
+                R.id.caminhada_exercise -> {
+                    currExerciseType = ExerciseType.CAMINHADA
+                }
+            }
+
             true
-        })
+        }
 
         popup.show()
     }
