@@ -2,7 +2,6 @@ package com.example.appersonaltrainer.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
@@ -32,19 +31,24 @@ import java.util.InvalidPropertiesFormatException
 
 class CreateSeriesActivity : AppCompatActivity() {
     private val seriesBeingCreated: Series = Series()
-    private var currExerciseType: ExerciseType? = null
+    private var currExerciseType: ExerciseType = ExerciseType.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_series_activity)
 
-        val minutes = findViewById<EditText>(R.id.minutes_new_exercise)
-        val seconds = findViewById<EditText>(R.id.seconds_new_exercise)
-
-        minutes.filters = arrayOf(MinMaxFilter)
-        seconds.filters = arrayOf(MinMaxFilter)
-
+        setupMinutesAndSecondsInputFields()
         setupButtons()
+    }
+
+    private fun setupMinutesAndSecondsInputFields() {
+        filterUserInputForField(R.id.minutes_new_exercise)
+        filterUserInputForField(R.id.seconds_new_exercise)
+    }
+
+    private fun filterUserInputForField(fieldId: Int) {
+        val field = findViewById<EditText>(fieldId)
+        field.filters = arrayOf(MinMaxFilter)
     }
 
     private fun setupButtons() {
@@ -56,7 +60,7 @@ class CreateSeriesActivity : AppCompatActivity() {
     private fun setupSetExerciseTypeButton() {
         val clickListener = View.OnClickListener { view ->
             when (view.id) {
-                R.id.new_exercise_button -> showPopup(view)
+                R.id.new_exercise_button -> setupAndShowExerciseTypePopupMenu(view)
             }
         }
 
@@ -71,33 +75,38 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun addExerciseFromUserInputToSeries() {
         try {
-            val exercise = createExerciseFromUserInput()
-            addExerciseToSeries(exercise)
+            createAndAddExerciseToSeries()
         } catch (e: NumberFormatException) {
-            Toast.makeText(this, R.string.exercise_has_empty_time_field_error, Toast.LENGTH_LONG)
-                .show()
+            showToastMessage(R.string.exercise_has_empty_time_field_error)
         } catch (e: InvalidPropertiesFormatException) {
-            Toast.makeText(this, R.string.null_exercise_type_error, Toast.LENGTH_LONG).show()
+            showToastMessage(R.string.no_exercise_type_error)
         }
     }
 
-    private fun createExerciseFromUserInput(): Exercise {
-        val exerciseName: String = exercise_type_text_view.text.toString()
-        val exerciseTotalTime: Time = getExerciseTotalTimeFromUserInput()
+    private fun createAndAddExerciseToSeries() {
+        val exercise = createExerciseFromUserInput()
+        addExerciseToSeries(exercise)
+    }
 
-        if (exerciseName.isEmpty() || currExerciseType == null) {
+    private fun createExerciseFromUserInput(): Exercise {
+        if (currExerciseType == ExerciseType.EMPTY) {
             throw InvalidPropertiesFormatException("")
         }
 
-        val exerciseFromUserInput = Exercise(currExerciseType!!, exerciseTotalTime)
+        val exerciseTotalTime: Time = getExerciseTotalTimeFromUserInput()
+        val exerciseFromUserInput = Exercise(currExerciseType, exerciseTotalTime)
 
-        currExerciseType = null
-        exercise_type_text_view.text = ""
+        clearAllInputFields()
+
+        return exerciseFromUserInput
+    }
+
+    private fun clearAllInputFields() {
+        currExerciseType = ExerciseType.EMPTY
+        exercise_type_text_view.text = currExerciseType.toString()
         hours_new_exercise.text.clear()
         minutes_new_exercise.text.clear()
         seconds_new_exercise.text.clear()
-
-        return exerciseFromUserInput
     }
 
     private fun getExerciseTotalTimeFromUserInput(): Time {
@@ -110,7 +119,6 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun addExerciseToSeries(exercise: Exercise) {
         seriesBeingCreated.addExercise(exercise)
-
         updateExerciseList()
     }
 
@@ -119,20 +127,15 @@ class CreateSeriesActivity : AppCompatActivity() {
             seriesBeingCreated.name = new_series_name.text.toString()
 
             if (seriesBeingCreated.exercises.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    R.string.series_has_no_exercise_error,
-                    Toast.LENGTH_LONG
-                ).show()
+                showToastMessage(R.string.series_has_no_exercise_error)
             } else if (!seriesBeingCreated.name.isNullOrEmpty()) {
                 addSeriesToDatabase()
                 toastUserAndReturnToHomepageActivity()
             } else {
-                Toast.makeText(this, R.string.series_has_no_name_error, Toast.LENGTH_LONG).show()
+                showToastMessage(R.string.series_has_no_name_error)
             }
         }
     }
-
 
     private fun addSeriesToDatabase() {
         doAsync {
@@ -142,11 +145,7 @@ class CreateSeriesActivity : AppCompatActivity() {
     }
 
     private fun toastUserAndReturnToHomepageActivity() {
-        Toast.makeText(
-            this@CreateSeriesActivity,
-            R.string.series_saved_successfully,
-            Toast.LENGTH_LONG
-        ).show()
+        showToastMessage(R.string.series_saved_successfully)
 
         val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
         startActivity(changeToHomepageActivity)
@@ -169,29 +168,21 @@ class CreateSeriesActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadActivityList()
+    private fun setupAndShowExerciseTypePopupMenu(view: View) {
+        val exerciseTypesPopupMenu = setupPopupMenu(view)
+
+        exerciseTypesPopupMenu.show()
     }
 
-    private fun loadActivityList() {
-        doAsync {
-            val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
-            val m = db.getAccessObject().getAllCreatedSeries()
+    private fun setupPopupMenu(view: View): PopupMenu {
+        val exerciseTypesPopupMenu = PopupMenu(this, view)
+        exerciseTypesPopupMenu.inflate(R.menu.name_exercise_menu)
 
-            Log.v("Appersonal", "Tamanho da lista = ${m.size}")
-        }
-    }
-
-    private fun showPopup(view: View) {
-        val popup = PopupMenu(this, view)
-        popup.inflate(R.menu.name_exercise_menu)
-
-        popup.setOnMenuItemClickListener { item: MenuItem? ->
-            val exerciseType = item!!.title
+        exerciseTypesPopupMenu.setOnMenuItemClickListener { exerciseTypeItem: MenuItem? ->
+            val exerciseType = exerciseTypeItem!!.title
             exercise_type_text_view.text = exerciseType
 
-            when (item.itemId) {
+            when (exerciseTypeItem.itemId) {
                 R.id.ciclismo_exercise -> {
                     currExerciseType = ExerciseType.CICLISMO
                 }
@@ -209,6 +200,10 @@ class CreateSeriesActivity : AppCompatActivity() {
             true
         }
 
-        popup.show()
+        return exerciseTypesPopupMenu
+    }
+
+    private fun showToastMessage(messageId: Int) {
+        Toast.makeText(this, messageId, Toast.LENGTH_LONG).show()
     }
 }
