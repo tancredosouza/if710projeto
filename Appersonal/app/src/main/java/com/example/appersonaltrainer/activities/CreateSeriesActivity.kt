@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appersonaltrainer.MinMaxFilter
 import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.adapters.ExerciseAdapter
-import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.model.Exercise
 import com.example.appersonaltrainer.components.ExerciseType
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.databases.SeriesDB
 import kotlinx.android.synthetic.main.create_series_activity.add_new_exercise_button
@@ -30,7 +30,8 @@ import org.jetbrains.anko.doAsync
 import java.util.InvalidPropertiesFormatException
 
 class CreateSeriesActivity : AppCompatActivity() {
-    private val seriesBeingCreated: Series = Series()
+    private val seriesBeingCreated: Series =
+        Series()
     private var currExerciseType: ExerciseType = ExerciseType.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,7 +95,8 @@ class CreateSeriesActivity : AppCompatActivity() {
         }
 
         val exerciseTotalTime: Time = getExerciseTotalTimeFromUserInput()
-        val exerciseFromUserInput = Exercise(currExerciseType, exerciseTotalTime)
+        val exerciseFromUserInput =
+            Exercise(currExerciseType, exerciseTotalTime)
 
         clearAllInputFields()
 

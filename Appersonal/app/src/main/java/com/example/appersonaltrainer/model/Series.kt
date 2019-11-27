@@ -1,4 +1,4 @@
-package com.example.appersonaltrainer.components
+package com.example.appersonaltrainer.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

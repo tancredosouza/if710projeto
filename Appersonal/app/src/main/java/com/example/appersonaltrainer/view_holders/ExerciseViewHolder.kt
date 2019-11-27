@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
-import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.model.Exercise
 
 class ExerciseViewHolder(exerciseView: View) : RecyclerView.ViewHolder(exerciseView) {
     private val nameOfExerciseHolder: TextView

@@ -1,7 +1,7 @@
 package com.example.appersonaltrainer.converters
 
 import androidx.room.TypeConverter
-import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.model.Exercise
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.view_holders.SeriesViewHolder
 import com.example.appersonaltrainer.view_model.HomepageViewModel
 

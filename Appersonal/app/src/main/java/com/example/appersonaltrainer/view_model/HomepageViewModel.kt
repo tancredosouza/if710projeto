@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appersonaltrainer.activities.HomepageActivity
 import com.example.appersonaltrainer.adapters.SeriesAdapter
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.databases.SeriesDB
 import kotlinx.android.synthetic.main.homepage_activity.series_list
 import org.jetbrains.anko.doAsync

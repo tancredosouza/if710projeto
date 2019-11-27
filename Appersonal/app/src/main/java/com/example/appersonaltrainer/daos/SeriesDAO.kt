@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 
 @Dao
 interface SeriesDAO {

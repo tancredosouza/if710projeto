@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.daos.SeriesDAO
 
 @Database(entities= arrayOf(Series::class), version=1)

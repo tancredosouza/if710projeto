@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.view_model.HomepageViewModel
 
 class SeriesViewHolder(seriesView: View, private val homepageViewModel: HomepageViewModel) :

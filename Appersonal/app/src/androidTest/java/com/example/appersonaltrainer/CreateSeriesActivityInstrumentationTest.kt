@@ -13,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
-import com.example.appersonaltrainer.components.Exercise
+import com.example.appersonaltrainer.model.Exercise
 import com.example.appersonaltrainer.components.ExerciseType
 import com.example.appersonaltrainer.components.Time
 import junit.framework.Assert.assertTrue
@@ -199,14 +199,20 @@ class CreateSeriesActivityInstrumentationTest {
     companion object {
         const val seriesName: String = "SERIES_NAME"
 
-        val someExercise = Exercise(ExerciseType.CAMINHADA, Time(10, 40, 50))
+        val someExercise =
+            Exercise(ExerciseType.CAMINHADA, Time(10, 40, 50))
 
-        val exerciseWithInvalidTime = Exercise(ExerciseType.CICLISMO, Time(10, 90, 72))
-        val exerciseWithValidTime = Exercise(ExerciseType.CICLISMO, Time(10, 9, 7))
+        val exerciseWithInvalidTime =
+            Exercise(ExerciseType.CICLISMO, Time(10, 90, 72))
+        val exerciseWithValidTime =
+            Exercise(ExerciseType.CICLISMO, Time(10, 9, 7))
 
         val sampleExercises =
             listOf(
-                Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
+                Exercise(
+                    ExerciseType.CAMINHADA,
+                    Time(1, 40, 59)
+                ),
                 Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
                 Exercise(ExerciseType.CORRIDA, Time(0, 50, 0)),
                 Exercise(ExerciseType.CICLISMO, Time(0, 30, 0)),
@@ -215,7 +221,10 @@ class CreateSeriesActivityInstrumentationTest {
 
         val expectedExercises =
             listOf(
-                Exercise(ExerciseType.CAMINHADA, Time(1, 40, 59)),
+                Exercise(
+                    ExerciseType.CAMINHADA,
+                    Time(1, 40, 59)
+                ),
                 Exercise(ExerciseType.YOGA, Time(0, 10, 40)),
                 Exercise(ExerciseType.CORRIDA, Time(0, 50, 0)),
                 Exercise(ExerciseType.CICLISMO, Time(0, 30, 0)),

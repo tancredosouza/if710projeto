@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
-import com.example.appersonaltrainer.components.Series
+import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.view_holders.ExerciseViewHolder
 
 class ExerciseAdapter(private val activity: CreateSeriesActivity) :
