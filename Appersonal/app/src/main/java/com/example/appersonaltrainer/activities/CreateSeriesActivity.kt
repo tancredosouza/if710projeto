@@ -47,6 +47,7 @@ class CreateSeriesActivity : AppCompatActivity() {
         filterUserInputForField(R.id.seconds_new_exercise)
     }
 
+    // TODO: move to TimeFieldFilter class
     private fun filterUserInputForField(fieldId: Int) {
         val field = findViewById<EditText>(fieldId)
         field.filters = arrayOf(MinMaxFilter)
@@ -74,6 +75,7 @@ class CreateSeriesActivity : AppCompatActivity() {
         }
     }
 
+    // TODO: move to ViewModel -> SeriesCreator class
     private fun addExerciseFromUserInputToSeries() {
         try {
             createAndAddExerciseToSeries()
@@ -83,12 +85,10 @@ class CreateSeriesActivity : AppCompatActivity() {
             showToastMessage(R.string.no_exercise_type_error)
         }
     }
-
     private fun createAndAddExerciseToSeries() {
         val exercise = createExerciseFromUserInput()
         addExerciseToSeries(exercise)
     }
-
     private fun createExerciseFromUserInput(): Exercise {
         if (currExerciseType == ExerciseType.EMPTY) {
             throw InvalidPropertiesFormatException("")
@@ -102,7 +102,6 @@ class CreateSeriesActivity : AppCompatActivity() {
 
         return exerciseFromUserInput
     }
-
     private fun clearAllInputFields() {
         currExerciseType = ExerciseType.EMPTY
         exercise_type_text_view.text = currExerciseType.toString()
@@ -110,7 +109,6 @@ class CreateSeriesActivity : AppCompatActivity() {
         minutes_new_exercise.text.clear()
         seconds_new_exercise.text.clear()
     }
-
     private fun getExerciseTotalTimeFromUserInput(): Time {
         val hours = hours_new_exercise.text.toString().toLong()
         val minutes = minutes_new_exercise.text.toString().toLong()
@@ -118,12 +116,12 @@ class CreateSeriesActivity : AppCompatActivity() {
 
         return Time(hours, minutes, seconds)
     }
-
     private fun addExerciseToSeries(exercise: Exercise) {
         seriesBeingCreated.addExercise(exercise)
         updateExerciseList()
     }
 
+    // TODO: move function inside setOnClickListener to ViewModel class
     private fun setupSaveSeriesButton() {
         save_new_series_button.setOnClickListener {
             seriesBeingCreated.name = new_series_name.text.toString()
@@ -139,6 +137,7 @@ class CreateSeriesActivity : AppCompatActivity() {
         }
     }
 
+    // TODO: move to ViewModel class
     private fun addSeriesToDatabase() {
         doAsync {
             val db = SeriesDB.getDatabase(this@CreateSeriesActivity)
@@ -154,11 +153,11 @@ class CreateSeriesActivity : AppCompatActivity() {
         finish()
     }
 
+    // TODO: move to ViewModel class
     fun deleteExerciseFromSeries(exercise: Exercise) {
         seriesBeingCreated.removeExercise(exercise)
         updateExerciseList()
     }
-
     fun getSeriesToBeCreated(): Series {
         return seriesBeingCreated
     }
@@ -176,6 +175,7 @@ class CreateSeriesActivity : AppCompatActivity() {
         exerciseTypesPopupMenu.show()
     }
 
+    // TODO: move to ViewModel
     private fun setupPopupMenu(view: View): PopupMenu {
         val exerciseTypesPopupMenu = PopupMenu(this, view)
         exerciseTypesPopupMenu.inflate(R.menu.name_exercise_menu)
