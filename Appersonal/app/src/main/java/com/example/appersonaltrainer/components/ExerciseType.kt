@@ -20,5 +20,10 @@ enum class ExerciseType {
         override fun toString(): String {
             return "CICLISMO"
         }
+    },
+    EMPTY {
+        override fun toString(): String {
+            return ""
+        }
     }
 }
