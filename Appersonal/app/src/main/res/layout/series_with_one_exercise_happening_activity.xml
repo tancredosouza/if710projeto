@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_background"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/backgroundColor">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/current_exercise_layout"
+    android:layout_width="260dp"
+    android:layout_height="110dp"
+    android:layout_marginTop="120dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginRight="4dp"
+    android:background="@color/white"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.535"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+      android:id="@+id/current_exercise_type"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="EXERCISE_TYPE"
+      android:textSize="24sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.195"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.792" />
+
+    <TextView
+      android:id="@+id/current_exercise_remaining_time"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="00:02:14"
+      android:textColor="#FF9800"
+      android:textSize="18sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.92"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.175" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <ImageButton
+    android:id="@+id/stop_series_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/current_exercise_layout"
+    app:layout_constraintVertical_bias="0.613"
+    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+  <ImageButton
+    android:id="@+id/next_exercise_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/play_pause_button"
+    app:layout_constraintTop_toBottomOf="@+id/current_exercise_layout"
+    app:layout_constraintVertical_bias="0.613"
+    app:srcCompat="@android:drawable/ic_media_next" />
+
+  <ImageButton
+    android:id="@+id/play_pause_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/next_exercise_button"
+    app:layout_constraintStart_toEndOf="@+id/stop_series_button"
+    app:layout_constraintTop_toBottomOf="@+id/current_exercise_layout"
+    app:layout_constraintVertical_bias="0.613"
+    app:srcCompat="@android:drawable/ic_media_play" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
