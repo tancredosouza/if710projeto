@@ -83,4 +83,20 @@
     app:layout_constraintVertical_bias="0.613"
     app:srcCompat="@android:drawable/ic_media_play" />
 
+  <TextView
+    android:id="@+id/series_name"
+    android:layout_width="184dp"
+    android:layout_height="27dp"
+    android:gravity="center_horizontal|center_vertical"
+    android:text="SERIES_NAME"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.515"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.592" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
