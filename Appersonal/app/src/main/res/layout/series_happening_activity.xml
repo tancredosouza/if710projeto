@@ -118,12 +118,25 @@
     android:id="@+id/stop_series_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="104dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/next_exercise_layout"
-    app:layout_constraintVertical_bias="0.03"
+    app:layout_constraintVertical_bias="0.766"
     app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+  <TextView
+    android:id="@+id/series_name"
+    android:layout_width="184dp"
+    android:layout_height="27dp"
+    android:gravity="center_horizontal|center_vertical"
+    android:text="SERIES_NAME"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
