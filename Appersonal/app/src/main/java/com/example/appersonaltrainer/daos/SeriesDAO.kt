@@ -21,4 +21,7 @@ interface SeriesDAO {
 
     @Query("SELECT * FROM series")
     fun getAllCreatedSeries() : Array<Series>
+
+    @Query("SELECT * FROM series WHERE id=:id ")
+    fun getSeriesWithId(id: String): Series
 }
