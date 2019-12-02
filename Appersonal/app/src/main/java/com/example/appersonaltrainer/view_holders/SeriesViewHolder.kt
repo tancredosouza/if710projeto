@@ -1,14 +1,22 @@
 package com.example.appersonaltrainer.view_holders
 
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appersonaltrainer.R
+import com.example.appersonaltrainer.activities.CreateSeriesActivity
+import com.example.appersonaltrainer.activities.SeriesHappeningActivity
+import com.example.appersonaltrainer.activities.SeriesWithOneExerciseHappeningActivity
 import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.view_model.HomepageViewModel
 
-class SeriesViewHolder(seriesView: View, private val homepageViewModel: HomepageViewModel) :
+class SeriesViewHolder(
+    private val seriesView: View,
+    private val homepageViewModel: HomepageViewModel
+) :
     RecyclerView.ViewHolder(seriesView) {
 
     private val nameOfSeriesHolder: TextView
@@ -24,6 +32,22 @@ class SeriesViewHolder(seriesView: View, private val homepageViewModel: Homepage
 
         seriesDeleteAction.setOnClickListener {
             homepageViewModel.deleteSeries(series)
+        }
+
+        if (series.exercises.size > 1) {
+            seriesView.setOnClickListener {
+                val intent = Intent(seriesView.context, SeriesHappeningActivity::class.java)
+                intent.putExtra("series_id", series.id)
+
+                startActivity(seriesView.context, intent, null)
+            }
+        } else {
+            seriesView.setOnClickListener {
+                val intent = Intent(seriesView.context, SeriesWithOneExerciseHappeningActivity::class.java)
+                intent.putExtra("series_id", series.id)
+
+                startActivity(seriesView.context, intent, null)
+            }
         }
     }
 
