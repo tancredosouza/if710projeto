@@ -7,11 +7,5 @@ interface AppersonalContract {
         fun updateDisplayedTime(currentTimeInSeconds: Long)
 
         fun getContext(): LifecycleOwner
-
-        fun getUserInput(): Long
-
-        fun buttonDisplaysThatCountingStarted()
-
-        fun buttonDisplaysThatCountingStopped()
     }
 }

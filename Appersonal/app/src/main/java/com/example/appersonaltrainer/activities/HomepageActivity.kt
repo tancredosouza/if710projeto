@@ -35,6 +35,7 @@ class HomepageActivity : AppCompatActivity() {
     private fun changeToCreateSeriesActivity() {
         val intent = Intent(this, CreateSeriesActivity::class.java)
         startActivity(intent)
+        this.finish()
     }
 
     override fun onResume() {

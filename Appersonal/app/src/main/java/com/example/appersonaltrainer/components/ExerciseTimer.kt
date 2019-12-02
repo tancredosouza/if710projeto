@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import java.util.Timer
 import java.util.TimerTask
 
-class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) {
+class ExerciseTimer private constructor(private var remainingTime: Long) {
     private val TIMER_TASK: TimerTask
     private val TIMER_LIVE_DATA: MutableLiveData<Long>
 
@@ -29,12 +29,20 @@ class ExerciseTimer private constructor(private var initialTimeInSeconds: Long) 
     private fun createTimerTask(): TimerTask {
         return object : TimerTask() {
             override fun run() {
-                Log.v("Appersonal", "Update displayed time to $initialTimeInSeconds")
-                TIMER_LIVE_DATA.postValue(initialTimeInSeconds)
+                Log.v("Appersonal", "Update displayed time to $remainingTime")
+                TIMER_LIVE_DATA.postValue(remainingTime)
 
-                initialTimeInSeconds -= 1
+                remainingTime -= 1
+
+                if (remainingTime <= 0) {
+                    finishTimer()
+                }
             }
         }
+    }
+
+    private fun finishTimer() {
+        // TODO: should change to the next exercise (use a broadcast)
     }
 
     private fun setupShouldUpdateTimeEverySecond() {

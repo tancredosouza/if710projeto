@@ -9,6 +9,7 @@ import com.example.appersonaltrainer.view_model.AppersonalViewModel
 import kotlinx.android.synthetic.main.timer_activity.action_button
 import kotlinx.android.synthetic.main.timer_activity.timerField
 
+@Deprecated("Only a toy class")
 class TimerActivity : AppCompatActivity(), AppersonalContract.View {
     private lateinit var viewModel: AppersonalViewModel
 
@@ -21,7 +22,7 @@ class TimerActivity : AppCompatActivity(), AppersonalContract.View {
     }
 
     private fun setupViewModel() {
-        viewModel = AppersonalViewModel(this)
+        //viewModel = AppersonalViewModel(this)
     }
 
     private fun setupButtonClickListener() {
@@ -30,14 +31,6 @@ class TimerActivity : AppCompatActivity(), AppersonalContract.View {
                 viewModel.handleButtonPress()
             }
         }
-    }
-
-    override fun buttonDisplaysThatCountingStarted() {
-        action_button.setImageResource(android.R.drawable.ic_media_pause)
-    }
-
-    override fun buttonDisplaysThatCountingStopped() {
-        action_button.setImageResource(android.R.drawable.ic_media_play)
     }
 
     override fun onDestroy() {
@@ -51,9 +44,5 @@ class TimerActivity : AppCompatActivity(), AppersonalContract.View {
 
     override fun getContext(): LifecycleOwner {
         return this
-    }
-
-    override fun getUserInput(): Long {
-        return timerField.text.toString().toLong()
     }
 }

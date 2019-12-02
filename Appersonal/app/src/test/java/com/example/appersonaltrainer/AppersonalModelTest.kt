@@ -1,9 +1,9 @@
 package com.example.appersonaltrainer
 
+import com.example.appersonaltrainer.components.Time
+import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.model.AppersonalTimerModel
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertFalse
-import junit.framework.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -14,21 +14,21 @@ class AppersonalViewModelTest {
 
     @Before
     fun init() {
-        timerModel = AppersonalTimerModel(10)
+        timerModel = AppersonalTimerModel(Time(0,0,10))
     }
 
     @Test
     fun testStartCounting() {
         timerModel.startCounting()
 
-        assertTrue(timerModel.isCounting)
+        assertEquals(TimerState.COUNTING, timerModel.timerState)
     }
 
     @Test
     fun testStopCounting() {
         timerModel.stopCounting()
 
-        assertFalse(timerModel.isCounting)
+        assertEquals(TimerState.STOPPED, timerModel.timerState)
     }
 
     @Ignore
