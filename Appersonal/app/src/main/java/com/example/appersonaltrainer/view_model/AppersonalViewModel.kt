@@ -2,6 +2,7 @@ package com.example.appersonaltrainer.view_model
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.model.AppersonalTimerModel
@@ -9,7 +10,7 @@ import com.example.appersonaltrainer.model.Series
 
 class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, series: Series) :
     ViewModel() {
-    private val timerModel: AppersonalTimerModel
+    private var timerModel: AppersonalTimerModel
 
     private lateinit var elapsedTimeObserver: Observer<Long>
 
@@ -17,11 +18,17 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
         if (timerModel.timerState == TimerState.STOPPED) {
             observeDisplayedTimeChanges()
             timerModel.startCounting()
+        } else if (timerModel.timerState == TimerState.COUNTING) {
+            timerModel.pauseCounting()
+            timerModel = AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
         } else {
-            shutdown()
+            observeDisplayedTimeChanges()
+            timerModel.startCounting()
         }
         viewToPresent.updateImageResource(timerModel.timerState)
     }
+
+
 
     fun shutdown() {
         if (timerModel.timerState == TimerState.COUNTING) {
@@ -36,6 +43,14 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
         timerModel = AppersonalTimerModel(series.exercises[0].totalTime)
 
         observeDisplayedTimeChanges()
+    }
+
+    fun getTimeFromSeconds(seconds: Long): Time {
+        val numberOfHours = seconds / 3600
+        val numberOfMinutes = (seconds % 3600) / 60
+        val numberOfSeconds = ((seconds % 3600) % 60)
+
+        return Time(numberOfHours, numberOfMinutes, numberOfSeconds)
     }
 
     private fun observeDisplayedTimeChanges() {

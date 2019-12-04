@@ -39,10 +39,6 @@ class ExerciseTimer private constructor(private var remainingTime: Long) {
         // TODO: should change to the next exercise (use a broadcast)
     }
 
-    fun pauseCounting() {
-
-    }
-
     companion object {
         fun withInitialTime(timeInSeconds: Long) =
             ExerciseTimer(timeInSeconds)
