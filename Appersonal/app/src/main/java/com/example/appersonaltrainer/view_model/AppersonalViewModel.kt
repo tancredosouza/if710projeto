@@ -1,5 +1,6 @@
 package com.example.appersonaltrainer.view_model
 
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.appersonaltrainer.components.Time
@@ -17,7 +18,6 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
     fun handleButtonPress() {
         when (timerModel.timerState) {
             TimerState.STOPPED -> {
-                observeDisplayedTimeChanges()
                 timerModel.startTimer()
             }
             TimerState.COUNTING -> {
@@ -26,7 +26,6 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
                     AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
             }
             else -> {
-                observeDisplayedTimeChanges()
                 timerModel.startTimer()
             }
         }

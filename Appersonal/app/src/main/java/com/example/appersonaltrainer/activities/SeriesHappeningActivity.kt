@@ -1,8 +1,10 @@
 package com.example.appersonaltrainer.activities
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -41,7 +43,6 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.series_happening_activity)
 
-        Log.d("SeriesHappeningActivity", "onCreate")
         val seriesId: String = intent.getStringExtra("series_id")!!
         loadSeriesFromDatabase(seriesId)
     }
@@ -49,7 +50,6 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private fun loadSeriesFromDatabase(seriesId: String) {
         val db = SeriesDB.getDatabase(applicationContext)
 
-        Log.d("SeriesHappeningActivity", "loaded")
         doAsync {
             seriesHappening = db.getAccessObject().getSeriesWithId(seriesId)
 
@@ -65,13 +65,11 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     }
 
     private fun setupViewModel(e: Int) {
-        Log.d("SeriesHappeningActivity", "viewmodel")
         viewModel = AppersonalViewModel(this, seriesHappening, e)
         setupButtonClickListener()
     }
 
     private fun setupButtonClickListener() {
-        Log.d("SeriesHappeningActivity", "setupButtonClickListener")
         play_pause_button.apply {
             setOnClickListener {
                 viewModel.handleButtonPress()
@@ -95,12 +93,13 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private fun setupActivity(e: Int) {
         val exercises = seriesHappening.exercises
 
-        Log.d("SeriesHappeningActivity", "setupactivity")
         current_exercise_remaining_time.text = exercises[e].totalTime.toString()
         current_exercise_type.text = exercises[e].type.toString()
         if (exercises.size > 1 && e + 1 < exercises.size) {
             next_exercise_remaining_time.text = exercises[e + 1].totalTime.toString()
             next_exercise_type.text = exercises[e + 1].type.toString()
+            next_exercise_layout.visibility = View.VISIBLE
+            next_exercise_button.visibility = View.VISIBLE
         } else {
             next_exercise_layout.visibility = View.INVISIBLE
             next_exercise_button.visibility = View.INVISIBLE
@@ -136,7 +135,34 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
             e += 1
             setupViewModelAndActivity(e)
             viewModel.handleButtonPress()
+        } else {
+            showCompletedDialog()
         }
+    }
+
+    private fun buildCompletedDialog(): AlertDialog.Builder? {
+        val builder: AlertDialog.Builder? = this.let {
+            AlertDialog.Builder(it)
+        }
+
+        builder?.apply {
+            setPositiveButton("OK",
+                DialogInterface.OnClickListener { dialog, id ->
+                    viewModel.shutdown()
+                    e = 0
+                    updateImageResource(TimerState.STOPPED)
+                    setupViewModelAndActivity(e)
+                })
+        }
+
+// 2. Chain together various setter methods to set the dialog characteristics
+        builder?.setMessage("Você acabou de completar '${seriesHappening.name}'")?.setTitle("Completado!")
+        return builder
+    }
+
+    private fun showCompletedDialog() {
+        val dialog = buildCompletedDialog()
+        dialog?.show()
     }
 
     private fun sendNotification() {

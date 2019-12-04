@@ -1,6 +1,7 @@
 package com.example.appersonaltrainer.components
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 
 class ExerciseTimer private constructor(private var remainingTime: Long) {
@@ -29,6 +30,7 @@ class ExerciseTimer private constructor(private var remainingTime: Long) {
             override fun onFinish() {}
 
             override fun onTick(millisUntilFinished: Long) {
+
                 remainingTime = millisUntilFinished / 1000
                 TIMER_LIVE_DATA.postValue(remainingTime)
             }
