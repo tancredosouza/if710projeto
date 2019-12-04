@@ -19,21 +19,21 @@ class AppersonalViewModelTest {
 
     @Test
     fun testStartCounting() {
-        timerModel.startCounting()
+        timerModel.startTimer()
 
         assertEquals(TimerState.COUNTING, timerModel.timerState)
     }
 
     @Test
     fun testStopCounting() {
-        timerModel.stopCounting()
+        timerModel.stopTimer()
 
         assertEquals(TimerState.STOPPED, timerModel.timerState)
     }
 
     @Ignore
     fun testGetLiveDataFromTimer() {
-        timerModel.startCounting()
+        timerModel.startTimer()
         val x = timerModel.getLiveDataFromTimer()
 
         // TODO: This test isn't working. I don't know how one would test this

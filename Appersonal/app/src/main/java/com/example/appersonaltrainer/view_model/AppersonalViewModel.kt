@@ -17,13 +17,13 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
     fun handleButtonPress() {
         if (timerModel.timerState == TimerState.STOPPED) {
             observeDisplayedTimeChanges()
-            timerModel.startCounting()
+            timerModel.startTimer()
         } else if (timerModel.timerState == TimerState.COUNTING) {
-            timerModel.pauseCounting()
+            timerModel.pauseTimer()
             timerModel = AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
         } else {
             observeDisplayedTimeChanges()
-            timerModel.startCounting()
+            timerModel.startTimer()
         }
         viewToPresent.updateImageResource(timerModel.timerState)
     }
@@ -32,7 +32,7 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
 
     fun shutdown() {
         if (timerModel.timerState == TimerState.COUNTING) {
-            timerModel.stopCounting()
+            timerModel.stopTimer()
         }
 
         timerModel.getLiveDataFromTimer()
