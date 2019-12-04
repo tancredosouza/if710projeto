@@ -20,6 +20,7 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
         } else {
             shutdown()
         }
+        viewToPresent.updateImageResource(timerModel.timerState)
     }
 
     fun shutdown() {

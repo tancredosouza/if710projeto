@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.components.Time
+import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.databases.SeriesDB
 import com.example.appersonaltrainer.model.Series
@@ -75,6 +76,14 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     override fun onDestroy() {
         viewModel.shutdown()
         super.onDestroy()
+    }
+
+    override fun updateImageResource(timerState : TimerState) {
+        if (timerState == TimerState.COUNTING) {
+            play_pause_button.setImageResource(android.R.drawable.ic_media_pause)
+        } else {
+            play_pause_button.setImageResource(android.R.drawable.ic_media_play)
+        }
     }
 
     override fun updateDisplayedTime(currentTimeInSeconds: Long) {
