@@ -1,6 +1,8 @@
 package com.example.appersonaltrainer.activities
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.appersonaltrainer.R
@@ -9,12 +11,7 @@ import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.databases.SeriesDB
 import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.view_model.AppersonalViewModel
-import kotlinx.android.synthetic.main.series_happening_activity.current_exercise_remaining_time
-import kotlinx.android.synthetic.main.series_happening_activity.current_exercise_type
-import kotlinx.android.synthetic.main.series_happening_activity.next_exercise_remaining_time
-import kotlinx.android.synthetic.main.series_happening_activity.next_exercise_type
-import kotlinx.android.synthetic.main.series_happening_activity.play_pause_button
-import kotlinx.android.synthetic.main.series_happening_activity.series_name
+import kotlinx.android.synthetic.main.series_happening_activity.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -25,7 +22,7 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.series_happening_activity)
-
+        Log.d("SeriesHappeningActivity", "onCreate")
         val seriesId: String = intent.getStringExtra("series_id")!!
         loadSeriesFromDatabase(seriesId)
     }
@@ -33,6 +30,7 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private fun loadSeriesFromDatabase(seriesId: String) {
         val db = SeriesDB.getDatabase(applicationContext)
 
+        Log.d("SeriesHappeningActivity", "loaded")
         doAsync {
             seriesHappening = db.getAccessObject().getSeriesWithId(seriesId)
 
@@ -44,11 +42,14 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     }
 
     private fun setupViewModel() {
+
+        Log.d("SeriesHappeningActivity", "viewmodel")
         viewModel = AppersonalViewModel(this, seriesHappening)
         setupButtonClickListener()
     }
 
     private fun setupButtonClickListener() {
+        Log.d("SeriesHappeningActivity", "setupButtonClickListener")
         play_pause_button.apply {
             setOnClickListener {
                 viewModel.handleButtonPress()
@@ -59,12 +60,15 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private fun setupActivity() {
         val exercises = seriesHappening.exercises
 
+        Log.d("SeriesHappeningActivity", "setupactivity")
         current_exercise_remaining_time.text = exercises[0].totalTime.toString()
         current_exercise_type.text = exercises[0].type.toString()
-
-        next_exercise_remaining_time.text = exercises[1].totalTime.toString()
-        next_exercise_type.text = exercises[1].type.toString()
-
+        if (exercises.size > 1) {
+            next_exercise_remaining_time.text = exercises[1].totalTime.toString()
+            next_exercise_type.text = exercises[1].type.toString()
+        } else {
+            next_exercise_layout.visibility = View.INVISIBLE
+        }
         series_name.text = seriesHappening.name
     }
 
