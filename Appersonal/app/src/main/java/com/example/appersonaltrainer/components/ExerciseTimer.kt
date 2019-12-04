@@ -26,7 +26,7 @@ class ExerciseTimer private constructor(private var remainingTime: Long) {
 
     private fun createCountdownTimer(): CountDownTimer {
         return object : CountDownTimer(remainingTime * 1000, 1000) {
-            override fun onFinish() = finishTimer()
+            override fun onFinish() {}
 
             override fun onTick(millisUntilFinished: Long) {
                 remainingTime = millisUntilFinished / 1000
@@ -35,12 +35,12 @@ class ExerciseTimer private constructor(private var remainingTime: Long) {
         }
     }
 
-    private fun finishTimer() {
-        // TODO: should change to the next exercise (use a broadcast)
-    }
-
     companion object {
         fun withInitialTime(timeInSeconds: Long) =
             ExerciseTimer(timeInSeconds)
+
+
+        val CURRENT_EXERCISE_ENDED =
+            "com.example.appersonaltrainer.components.notification.CURRENT_EXERCISE_ENDED"
     }
 }

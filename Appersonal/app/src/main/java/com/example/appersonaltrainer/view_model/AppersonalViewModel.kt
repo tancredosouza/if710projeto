@@ -8,27 +8,31 @@ import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.model.AppersonalTimerModel
 import com.example.appersonaltrainer.model.Series
 
-class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, series: Series) :
+class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, series: Series, e: Int) :
     ViewModel() {
     private var timerModel: AppersonalTimerModel
 
     private lateinit var elapsedTimeObserver: Observer<Long>
 
     fun handleButtonPress() {
-        if (timerModel.timerState == TimerState.STOPPED) {
-            observeDisplayedTimeChanges()
-            timerModel.startTimer()
-        } else if (timerModel.timerState == TimerState.COUNTING) {
-            timerModel.pauseTimer()
-            timerModel = AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
-        } else {
-            observeDisplayedTimeChanges()
-            timerModel.startTimer()
+        when (timerModel.timerState) {
+            TimerState.STOPPED -> {
+                observeDisplayedTimeChanges()
+                timerModel.startTimer()
+            }
+            TimerState.COUNTING -> {
+                timerModel.pauseTimer()
+                timerModel =
+                    AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
+            }
+            else -> {
+                observeDisplayedTimeChanges()
+                timerModel.startTimer()
+            }
         }
+
         viewToPresent.updateImageResource(timerModel.timerState)
     }
-
-
 
     fun shutdown() {
         if (timerModel.timerState == TimerState.COUNTING) {
@@ -40,8 +44,7 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
     }
 
     init {
-        timerModel = AppersonalTimerModel(series.exercises[0].totalTime)
-
+        timerModel = AppersonalTimerModel(series.exercises[e].totalTime)
         observeDisplayedTimeChanges()
     }
 

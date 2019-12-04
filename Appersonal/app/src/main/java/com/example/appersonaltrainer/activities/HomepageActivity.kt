@@ -40,7 +40,6 @@ class HomepageActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         homepageViewModel.loadSeriesOfUser()
     }
 }

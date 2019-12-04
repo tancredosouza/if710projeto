@@ -1,12 +1,18 @@
 package com.example.appersonaltrainer.activities
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.appersonaltrainer.R
+import com.example.appersonaltrainer.components.ExerciseTimer.Companion.CURRENT_EXERCISE_ENDED
 import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.contract.AppersonalContract
@@ -20,10 +26,12 @@ import org.jetbrains.anko.uiThread
 class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private lateinit var viewModel: AppersonalViewModel
     private lateinit var seriesHappening: Series
+    private var e: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.series_happening_activity)
+
         Log.d("SeriesHappeningActivity", "onCreate")
         val seriesId: String = intent.getStringExtra("series_id")!!
         loadSeriesFromDatabase(seriesId)
@@ -37,15 +45,19 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
             seriesHappening = db.getAccessObject().getSeriesWithId(seriesId)
 
             uiThread {
-                setupViewModel()
-                setupActivity()
+                setupViewModelAndActivity(e)
             }
         }
     }
 
-    private fun setupViewModel() {
+    private fun setupViewModelAndActivity(e: Int) {
+        setupViewModel(e)
+        setupActivity(e)
+    }
+
+    private fun setupViewModel(e: Int) {
         Log.d("SeriesHappeningActivity", "viewmodel")
-        viewModel = AppersonalViewModel(this, seriesHappening)
+        viewModel = AppersonalViewModel(this, seriesHappening, e)
         setupButtonClickListener()
     }
 
@@ -66,15 +78,15 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
         }
     }
 
-    private fun setupActivity() {
+    private fun setupActivity(e: Int) {
         val exercises = seriesHappening.exercises
 
         Log.d("SeriesHappeningActivity", "setupactivity")
-        current_exercise_remaining_time.text = exercises[0].totalTime.toString()
-        current_exercise_type.text = exercises[0].type.toString()
-        if (exercises.size > 1) {
-            next_exercise_remaining_time.text = exercises[1].totalTime.toString()
-            next_exercise_type.text = exercises[1].type.toString()
+        current_exercise_remaining_time.text = exercises[e].totalTime.toString()
+        current_exercise_type.text = exercises[e].type.toString()
+        if (exercises.size > 1 && e + 1 < exercises.size) {
+            next_exercise_remaining_time.text = exercises[e + 1].totalTime.toString()
+            next_exercise_type.text = exercises[e + 1].type.toString()
         } else {
             next_exercise_layout.visibility = View.INVISIBLE
         }
@@ -97,6 +109,13 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     override fun updateDisplayedTime(currentTimeInSeconds: Long) {
         current_exercise_remaining_time.text =
             getTimeFromSeconds(currentTimeInSeconds).toString()
+
+        if (currentTimeInSeconds == 0L && e + 1 < seriesHappening.exercises.size) {
+            // TODO: send notification that exercise ended
+            e += 1
+            setupViewModelAndActivity(e)
+            viewModel.handleButtonPress()
+        }
     }
 
     fun getTimeFromSeconds(seconds: Long): Time {
