@@ -76,6 +76,11 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
                 finish()
             }
         }
+        next_exercise_button.apply {
+            setOnClickListener {
+                goToNextExercise()
+            }
+        }
     }
 
     private fun setupActivity(e: Int) {
@@ -110,11 +115,20 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
         current_exercise_remaining_time.text =
             getTimeFromSeconds(currentTimeInSeconds).toString()
 
-        if (currentTimeInSeconds == 0L && e + 1 < seriesHappening.exercises.size) {
+        if (currentTimeInSeconds == 0L) {
+            goToNextExercise()
+        }
+    }
+
+    private fun goToNextExercise() {
+        if (e + 1 < seriesHappening.exercises.size) {
             // TODO: send notification that exercise ended
             e += 1
             setupViewModelAndActivity(e)
             viewModel.handleButtonPress()
+        } else {
+            viewModel.shutdown()
+            finish()
         }
     }
 
