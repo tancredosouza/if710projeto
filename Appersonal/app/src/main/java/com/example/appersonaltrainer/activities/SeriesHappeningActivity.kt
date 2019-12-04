@@ -1,5 +1,6 @@
 package com.example.appersonaltrainer.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,7 +44,6 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     }
 
     private fun setupViewModel() {
-
         Log.d("SeriesHappeningActivity", "viewmodel")
         viewModel = AppersonalViewModel(this, seriesHappening)
         setupButtonClickListener()
@@ -54,6 +54,14 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
         play_pause_button.apply {
             setOnClickListener {
                 viewModel.handleButtonPress()
+            }
+        }
+        stop_series_button.apply {
+            setOnClickListener {
+                val intent = Intent(this@SeriesHappeningActivity, HomepageActivity::class.java)
+                startActivity(intent)
+                viewModel.shutdown()
+                finish()
             }
         }
     }
