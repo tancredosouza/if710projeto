@@ -19,6 +19,11 @@ class AppersonalTimerModel(initialTime: Time) {
         timerState = TimerState.COUNTING
     }
 
+    fun pauseCounting() {
+        EXERCISE_TIMER.pauseCounting()
+        timerState = TimerState.PAUSED
+    }
+
     fun stopCounting() {
         EXERCISE_TIMER.stopCounting()
         timerState = TimerState.STOPPED
