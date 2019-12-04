@@ -1,30 +1,41 @@
 package com.example.appersonaltrainer.view_model
 
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.model.AppersonalTimerModel
 import com.example.appersonaltrainer.model.Series
 
-class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, series: Series) :
+class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, series: Series, e: Int) :
     ViewModel() {
-    private val timerModel: AppersonalTimerModel
+    private var timerModel: AppersonalTimerModel
 
     private lateinit var elapsedTimeObserver: Observer<Long>
 
     fun handleButtonPress() {
-        if (timerModel.timerState == TimerState.STOPPED) {
-            observeDisplayedTimeChanges()
-            timerModel.startCounting()
-        } else {
-            shutdown()
+        when (timerModel.timerState) {
+            TimerState.STOPPED -> {
+                timerModel.startTimer()
+            }
+            TimerState.COUNTING -> {
+                timerModel.pauseTimer()
+                timerModel =
+                    AppersonalTimerModel(getTimeFromSeconds(timerModel.getLiveDataFromTimer().value!!))
+            }
+            else -> {
+                timerModel.startTimer()
+            }
         }
+
+        viewToPresent.updateImageResource(timerModel.timerState)
     }
 
     fun shutdown() {
         if (timerModel.timerState == TimerState.COUNTING) {
-            timerModel.stopCounting()
+            timerModel.stopTimer()
         }
 
         timerModel.getLiveDataFromTimer()
@@ -32,9 +43,16 @@ class AppersonalViewModel(private val viewToPresent: AppersonalContract.View, se
     }
 
     init {
-        timerModel = AppersonalTimerModel(series.exercises[0].totalTime)
-
+        timerModel = AppersonalTimerModel(series.exercises[e].totalTime)
         observeDisplayedTimeChanges()
+    }
+
+    fun getTimeFromSeconds(seconds: Long): Time {
+        val numberOfHours = seconds / 3600
+        val numberOfMinutes = (seconds % 3600) / 60
+        val numberOfSeconds = ((seconds % 3600) % 60)
+
+        return Time(numberOfHours, numberOfMinutes, numberOfSeconds)
     }
 
     private fun observeDisplayedTimeChanges() {
