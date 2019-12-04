@@ -94,6 +94,7 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
             next_exercise_type.text = exercises[e + 1].type.toString()
         } else {
             next_exercise_layout.visibility = View.INVISIBLE
+            next_exercise_button.visibility = View.INVISIBLE
         }
         series_name.text = seriesHappening.name
     }
@@ -126,9 +127,6 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
             e += 1
             setupViewModelAndActivity(e)
             viewModel.handleButtonPress()
-        } else {
-            viewModel.shutdown()
-            finish()
         }
     }
 
