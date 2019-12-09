@@ -18,16 +18,28 @@
       android:layout_width="332dp"
       android:layout_height="38dp"
       android:layout_marginStart="16dp"
-      android:layout_marginLeft="16dp"
       android:layout_weight="8"
       android:text="Series Name"
       android:textSize="24sp"
       android:textStyle="bold"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/item_action"
-      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintBottom_toTopOf="@id/series_timestamp"
+      app:layout_constraintEnd_toStartOf="@+id/delete_action"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/series_timestamp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="8"
+      android:text="yyyy-MM-dd HH:mm:ss"
+      android:textSize="14sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.091"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/series_name" />
 
     <Button
       android:id="@+id/delete_action"
@@ -35,9 +47,8 @@
       android:layout_height="46dp"
       android:layout_weight="2"
       android:text="X"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintStart_toEndOf="@id/series_name"
+      app:layout_constraintEnd_toEndOf="parent" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

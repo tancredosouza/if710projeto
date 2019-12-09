@@ -17,6 +17,7 @@ import com.example.appersonaltrainer.components.ExerciseType
 import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.databases.SeriesDB
+import com.example.appersonaltrainer.fragments.HomepageFragment
 import kotlinx.android.synthetic.main.create_series_activity.add_new_exercise_button
 import kotlinx.android.synthetic.main.create_series_activity.exercise_type_text_view
 import kotlinx.android.synthetic.main.create_series_activity.hours_new_exercise
@@ -147,9 +148,6 @@ class CreateSeriesActivity : AppCompatActivity() {
 
     private fun toastUserAndReturnToHomepageActivity() {
         showToastMessage(R.string.series_saved_successfully)
-
-        val changeToHomepageActivity = Intent(this, HomepageActivity::class.java)
-        startActivity(changeToHomepageActivity)
         finish()
     }
 

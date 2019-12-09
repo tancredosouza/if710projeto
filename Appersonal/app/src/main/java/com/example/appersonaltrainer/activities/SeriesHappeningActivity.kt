@@ -8,7 +8,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -19,7 +18,10 @@ import com.example.appersonaltrainer.components.Time
 import com.example.appersonaltrainer.components.TimerState
 import com.example.appersonaltrainer.contract.AppersonalContract
 import com.example.appersonaltrainer.databases.SeriesDB
+import com.example.appersonaltrainer.databases.SeriesHistoryDB
+import com.example.appersonaltrainer.fragments.HomepageFragment
 import com.example.appersonaltrainer.model.Series
+import com.example.appersonaltrainer.model.SeriesHistory
 import com.example.appersonaltrainer.view_model.AppersonalViewModel
 import kotlinx.android.synthetic.main.series_happening_activity.current_exercise_remaining_time
 import kotlinx.android.synthetic.main.series_happening_activity.current_exercise_type
@@ -32,6 +34,8 @@ import kotlinx.android.synthetic.main.series_happening_activity.series_name
 import kotlinx.android.synthetic.main.series_happening_activity.stop_series_button
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
@@ -77,8 +81,6 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
         }
         stop_series_button.apply {
             setOnClickListener {
-                val intent = Intent(this@SeriesHappeningActivity, HomepageActivity::class.java)
-                startActivity(intent)
                 viewModel.shutdown()
                 finish()
             }
@@ -152,12 +154,23 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
                     e = 0
                     updateImageResource(TimerState.STOPPED)
                     setupViewModelAndActivity(e)
+                    SaveSeriesOnHistoryDB()
                 })
         }
 
-// 2. Chain together various setter methods to set the dialog characteristics
         builder?.setMessage("Você acabou de completar '${seriesHappening.name}'")?.setTitle("Completado!")
         return builder
+    }
+
+    private fun SaveSeriesOnHistoryDB() {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val formatted = current.format(formatter)
+
+        doAsync {
+            val db = SeriesHistoryDB.getDatabase(this@SeriesHappeningActivity)
+            db.getAccessObject().insertSeriesHistory(SeriesHistory(formatted, seriesHappening.name!!))
+        }
     }
 
     private fun showCompletedDialog() {

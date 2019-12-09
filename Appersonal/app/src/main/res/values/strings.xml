@@ -3,6 +3,7 @@
   <string name="action_settings">Settings</string>
   <string name="totalExerciseTime">20</string>
   <string name="minhas_atividades">Minhas Atividades</string>
+  <string name="historico">Histórico</string>
   <string name="timer_activity_name">timer_activity</string>
   <string name="homepage_activity_name">homepage_activity</string>
   <string name="create_series_title">Criar Série</string>
@@ -11,5 +12,7 @@
   <string name="series_has_no_exercise_error">Série deve conter pelo menos um exercício!</string>
   <string name="exercise_has_empty_time_field_error">Campo de tempo não pode estar vazio!</string>
   <string name="no_exercise_type_error">Defina qual o tipo do exercício!</string>
+  <string name="title_homepage">Início</string>
+  <string name="title_recents">Recentes</string>
   <string name="series_saved_successfully">Atividade salva com sucesso!</string>
 </resources>
