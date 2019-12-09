@@ -1,19 +1,20 @@
 package com.example.appersonaltrainer.view_model
 
 import android.content.Context
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.appersonaltrainer.activities.HomepageActivity
+import com.example.appersonaltrainer.fragments.HomepageFragment
 import com.example.appersonaltrainer.adapters.SeriesAdapter
 import com.example.appersonaltrainer.model.Series
 import com.example.appersonaltrainer.databases.SeriesDB
-import kotlinx.android.synthetic.main.homepage_activity.series_list
+import kotlinx.android.synthetic.main.fragment_homepage.series_list
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-class HomepageViewModel(
+class HomepageViewModel (
     private val context: Context,
-    private val homepageActivity: HomepageActivity
-) {
+    private val homepageFragment: HomepageFragment
+) : ViewModel() {
     fun deleteSeries(series: Series) {
         val db = SeriesDB.getDatabase(context)
 
@@ -41,7 +42,7 @@ class HomepageViewModel(
     }
 
     fun updateSeriesList(seriesList: List<Series>) {
-        homepageActivity.series_list.apply {
+        homepageFragment.series_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = SeriesAdapter(seriesList, context, this@HomepageViewModel)
         }

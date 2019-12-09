@@ -1,6 +1,5 @@
 package com.example.appersonaltrainer.view_model
 
-import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.appersonaltrainer.components.Time
