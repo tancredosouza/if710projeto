@@ -135,6 +135,7 @@ class SeriesHappeningActivity : AppCompatActivity(), AppersonalContract.View {
     private fun goToNextExercise() {
         if (e + 1 < seriesHappening.exercises.size) {
             e += 1
+            viewModel.shutdown()
             setupViewModelAndActivity(e)
             viewModel.handleButtonPress()
         } else {
