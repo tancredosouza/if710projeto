@@ -12,6 +12,7 @@ import com.example.appersonaltrainer.activities.CreateSeriesActivity
 import com.example.appersonaltrainer.view_model.HomepageViewModel
 import com.example.appersonaltrainer.view_model.HomepageViewModelFactory
 import kotlinx.android.synthetic.main.fragment_homepage.*
+import leakcanary.AppWatcher
 
 class HomepageFragment : Fragment() {
     lateinit var homepageViewModel: HomepageViewModel
@@ -56,5 +57,10 @@ class HomepageFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         homepageViewModel.loadSeriesOfUser()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 }

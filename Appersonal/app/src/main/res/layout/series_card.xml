@@ -24,10 +24,11 @@
       android:textSize="24sp"
       android:textStyle="bold"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/item_action"
+      app:layout_constraintEnd_toStartOf="@+id/delete_action"
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      android:contentDescription="Nome da atividade" />
 
     <Button
       android:id="@+id/delete_action"
@@ -37,7 +38,8 @@
       android:text="X"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent"
+      android:contentDescription="Botão de apagar atividade" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 

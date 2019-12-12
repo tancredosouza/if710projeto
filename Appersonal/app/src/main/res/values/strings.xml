@@ -15,4 +15,11 @@
   <string name="title_homepage">Início</string>
   <string name="title_recents">Recentes</string>
   <string name="series_saved_successfully">Atividade salva com sucesso!</string>
+  <string name="nav_view">Barra de navegação</string>
+  <string name="list_of_exercises">Lista de exercícios</string>
+  <string name="new_exercise_button">Botão para criação de novo exercício</string>
+  <string name="hours_new_exercise">Campo de horas de duração do exercício</string>
+  <string name="series_list">Lista de atividades</string>
+  <string name="create_series_button">Botão de criação de uma atividade</string>
+  <string name="series_history_list">Lista de histórico de atividades completadas</string>
 </resources>

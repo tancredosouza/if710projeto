@@ -11,6 +11,7 @@ import com.example.appersonaltrainer.R
 import com.example.appersonaltrainer.activities.CreateSeriesActivity
 import com.example.appersonaltrainer.view_model.RecentsViewModel
 import com.example.appersonaltrainer.view_model.RecentsViewModelFactory
+import leakcanary.AppWatcher
 
 class RecentsFragment : Fragment() {
     lateinit var recentsViewModel: RecentsViewModel
@@ -30,5 +31,10 @@ class RecentsFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_recents, container, false)
         return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        AppWatcher.objectWatcher.watch(this)
     }
 }

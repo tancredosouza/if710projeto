@@ -27,7 +27,9 @@
     app:layout_constraintBottom_toTopOf="@id/create_series_button"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/homepage_title" />
+    app:layout_constraintTop_toBottomOf="@+id/homepage_title"
+    android:contentDescription="@string/series_list"
+    />
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/create_series_button"
@@ -41,6 +43,8 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/series_list"
-    app:srcCompat="@android:drawable/ic_input_add" />
+    app:srcCompat="@android:drawable/ic_input_add"
+    android:contentDescription="@string/create_series_button"
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
