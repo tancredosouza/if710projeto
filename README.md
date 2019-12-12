@@ -1,7 +1,9 @@
 # Appersonal Trainer
 
 ### IF710 - Programação para Dispositivos Móveis com Android
-Especificação Inicial do Projeto
+Especificação do Projeto
+
+[Demo](https://drive.google.com/file/d/17l4I3GxBZv4pwtFHmlcYUSh_yDNg8ITi/view?usp=sharing)
 
 ## Ideia de aplicativo
 Cuidar de sua saúde é muito importante, e muitas pessoas buscam esse cuidado através de atividades físicas. 
@@ -9,7 +11,7 @@ Com apps de fitness tracking, nos tornamos mais motivados ao organizar nossos ex
 Algumas dessas atividades são compostas por vários exercícios, cada um chama-se série. 
 Essas séries são realizadas em sequência, podendo ou não ter um intervalo de pausa entre elas.
 Porém, em aplicações de fitness tracking já existentes, é necessário escolher manualmente a próxima série quando uma termina, atrapalhando seu pique durante a atividade.
-Se já sabemos quanto tempo cada série leva ou quanta distância será percorrida em cada série, por que não só definirmos uma atividade com essas séries e deixar o aplicativo trocar automaticamente? O Appersonal Trainer fará isso por você. Ele pode até mesmo pausar a atividade, caso detecte que você parou de se movimentar.
+Se já sabemos quanto tempo cada série leva, por que não só definirmos uma atividade com essas séries e deixar o aplicativo trocar automaticamente? O Appersonal Trainer fará isso por você.
 
 ### Público-alvo
 Pessoas que realizam atividades físicas.
