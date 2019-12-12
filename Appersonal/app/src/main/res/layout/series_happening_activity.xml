@@ -101,34 +101,43 @@
     android:id="@+id/play_pause_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toStartOf="@+id/next_exercise_button"
     app:layout_constraintStart_toEndOf="@+id/stop_series_button"
     app:layout_constraintTop_toBottomOf="@+id/next_exercise_layout"
     app:layout_constraintVertical_bias="0.766"
-    app:srcCompat="@android:drawable/ic_media_play" />
+    app:srcCompat="@android:drawable/ic_media_play"
+    android:contentDescription="Botão de começar e pausar a atividade" />
 
   <ImageButton
     android:id="@+id/next_exercise_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toEndOf="@+id/play_pause_button"
     app:layout_constraintTop_toBottomOf="@+id/next_exercise_layout"
     app:layout_constraintVertical_bias="0.766"
-    app:srcCompat="@android:drawable/ic_media_next" />
+    app:srcCompat="@android:drawable/ic_media_next"
+    android:contentDescription="Botão para ir ao próximo exercício" />
 
   <ImageButton
     android:id="@+id/stop_series_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/next_exercise_layout"
     app:layout_constraintVertical_bias="0.766"
-    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+    android:contentDescription="Botão para cancelar a atividade" />
 
   <TextView
     android:id="@+id/series_name"
@@ -142,6 +151,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.77" />
+    app:layout_constraintVertical_bias="0.77"
+    android:contentDescription="Nome da atividade sendo feita" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
